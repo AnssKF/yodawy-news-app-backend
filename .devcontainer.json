@@ -1,0 +1,40 @@
+{
+    "name": "YODAWY-NEWS-DEV-CONTAINER",
+    "dockerComposeFile": "./docker-compose.yml",
+    "service": "php",
+    "workspaceFolder": "/var/www/html",
+    "shutdownAction": "stopCompose",
+    "extensions": [
+        "aaron-bond.better-comments",
+        "coenraads.bracket-pair-colorizer",
+        "christian-kohler.path-intellisense",
+        "robbowen.synthwave-vscode",
+        "oderwat.indent-rainbow",
+        "HookyQR.beautify",
+        "onecentlin.laravel-blade",
+        "formulahendry.auto-close-tag"
+    ],
+    "settings": {
+        "workbench.colorTheme": "SynthWave '84",
+
+        "indentRainbow.colors": [
+            "rgba(16,16,16,0.1)",
+            "rgba(16,16,16,0.3)",
+            "rgba(16,16,16,0.6)",
+            "rgba(16,16,16,0.4)",
+            "rgba(16,16,16,0.2)"
+        ],
+        "indentRainbow.errorColor": "rgba(128,32,32,0.1)",
+
+        "files.watcherExclude": {
+            "**/.git/objects/**": true,
+            "**/.git/subtree-cache/**": true
+        },
+
+        
+        "emmet.triggerExpansionOnTab": true,
+        "[blade]": {
+            "editor.autoClosingBrackets": "always"
+        },
+    }
+}
