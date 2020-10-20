@@ -22,8 +22,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Auth Routes
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\NewsController;
+use App\Http\Controllers\Api\FavoriteController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/news', [NewsController::class, 'index']);
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('/favorites', [FavoriteController::class, 'index']);
+    Route::post('/favorites', [FavoriteController::class, 'create']);
+    Route::delete('/favorites', [FavoriteController::class, 'destroy']);
+});
