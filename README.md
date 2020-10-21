@@ -7,6 +7,7 @@ The project based on Docker container
 - Clone with `git clone {this-repo}`
 - RUN `cd {repo-dir}`
 - RUN `docker-compose up`
+- Open [http://localhost:8080/](http://localhost:8080/)
 
 ---
 Or if you have Laravel working environment you can 
