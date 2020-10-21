@@ -1,5 +1,6 @@
 FROM php:7.3-fpm-stretch
 
+
 RUN apt-get update && apt-get install -qy --no-install-recommends \
     curl \
     openssl \
@@ -29,6 +30,7 @@ RUN docker-php-ext-install \
     intl \
     pcntl
 
+
 # Install composer
 ENV COMPOSER_HOME /composer
 ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
@@ -39,3 +41,6 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 RUN composer global require laravel/installer
 
 WORKDIR /var/www/html
+
+COPY src/composer.json src/composer.lock ./
+RUN composer install
