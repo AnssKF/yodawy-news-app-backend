@@ -11,6 +11,7 @@ The project based on Docker container
 ---
 Or if you have Laravel working environment you can 
 - `cd {repo-dir}/src`
+- `composer install`
 - `php artisan serve`
 
 ### Front-End Appliaction
