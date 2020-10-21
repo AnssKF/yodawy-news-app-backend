@@ -32,5 +32,5 @@ Route::get('/news', [NewsController::class, 'index']);
 Route::middleware(['auth:api'])->group(function () {
     // Route::get('/favorites', [FavoriteController::class, 'index']);
     Route::post('/favorites', [FavoriteController::class, 'create']);
-    Route::delete('/favorites', [FavoriteController::class, 'destroy']);
+    Route::post('/favorites/delete', [FavoriteController::class, 'destroy']);
 });
