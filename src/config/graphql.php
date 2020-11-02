@@ -102,18 +102,43 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                // 'example_query' => ExampleQuery::class,
-                App\GraphQL\Queries\FavsQuery::class,
-                App\GraphQL\Queries\UsersQuery::class,
                 App\GraphQL\Queries\Auth\LoginQuery::class,
             ],
             'mutation' => [
-                'RegisterUser' => App\GraphQL\Mutations\UserMutation::class
-                // 'example_mutation'  => ExampleMutation::class,
             ],
             'middleware' => [],
             'method' => ['get', 'post'],
         ],
+        'auth' => [
+            'query' => [
+                App\GraphQL\Queries\UsersQuery::class,
+            ],
+            'mutation' => [
+                'RegisterUser' => App\GraphQL\Mutations\UserMutation::class,
+            ],
+            'middleware' => [],
+            'method' => ['get', 'post'],
+        ],
+        'news' => [
+            'query' => [
+                App\GraphQL\Queries\NewsQuery::class
+            ],
+            'mutation' => [
+            ],
+            'middleware' => [],
+            'method' => ['get', 'post'],
+        ],
+        'fav' => [
+            'query' => [
+                App\GraphQL\Queries\FavsQuery::class
+            ],
+            'mutation' => [
+                'CreateFav' => App\GraphQL\Mutations\FavCreateMutation::class,
+                'DeleteFav' => App\GraphQL\Mutations\FavDeleteMutation::class
+            ],
+            'middleware' => ['auth:api'],
+            'method' => ['get', 'post'],
+        ]
     ],
 
     // The types available in the application. You can then access it from the
@@ -126,12 +151,11 @@ return [
     // ]
     //
     'types' => [
-        // 'example'           => ExampleType::class,
-        // 'relation_example'  => ExampleRelationType::class,
-        // \Rebing\GraphQL\Support\UploadType::class,
         'user' => App\GraphQL\Types\UserType::class,
         'fav' => App\GraphQL\Types\FavType::class,
         'login' => App\GraphQL\Types\Auth\LoginType::class,
+        'news' => App\GraphQL\Types\NewsType::class,
+        'news-source' => App\GraphQL\Types\SourceType::class
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

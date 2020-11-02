@@ -29,6 +29,14 @@ class UsersQuery extends Query
         ];
     }
 
+    protected function rules(array $args = []): array
+    {
+        return [
+            'id' => ['required_without:email'],
+            'email' => ['required_without:id']
+        ];
+    }
+
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
         if (isset($args['id'])) {
@@ -39,6 +47,6 @@ class UsersQuery extends Query
             return User::where('email', $args['email'])->get();
         }
 
-        return User::all();
+        return [];
     }
 }
