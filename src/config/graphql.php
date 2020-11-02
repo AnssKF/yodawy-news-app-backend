@@ -102,6 +102,15 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
+                App\GraphQL\Queries\UsersQuery::class,
+            ],
+            'mutation' => [
+            ],
+            'middleware' => [],
+            'method' => ['get', 'post'],
+        ],
+        'login' => [
+            'query' => [
                 App\GraphQL\Queries\Auth\LoginQuery::class,
             ],
             'mutation' => [
@@ -109,9 +118,8 @@ return [
             'middleware' => [],
             'method' => ['get', 'post'],
         ],
-        'auth' => [
+        'register' => [
             'query' => [
-                App\GraphQL\Queries\UsersQuery::class,
             ],
             'mutation' => [
                 'RegisterUser' => App\GraphQL\Mutations\UserMutation::class,
@@ -128,7 +136,7 @@ return [
             'middleware' => [],
             'method' => ['get', 'post'],
         ],
-        'fav' => [
+        'favorites' => [
             'query' => [
                 App\GraphQL\Queries\FavsQuery::class
             ],
