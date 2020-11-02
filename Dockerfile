@@ -42,5 +42,5 @@ RUN composer global require laravel/installer
 
 WORKDIR /var/www/html
 
-COPY src/composer.json src/composer.lock ./
-RUN composer install
+# COPY src/composer.json src/composer.lock ./
+# RUN composer install

@@ -24,13 +24,15 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\FavoriteController;
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-
-Route::get('/news', [NewsController::class, 'index']);
-
-Route::middleware(['auth:api'])->group(function () {
-    // Route::get('/favorites', [FavoriteController::class, 'index']);
-    Route::post('/favorites', [FavoriteController::class, 'create']);
-    Route::post('/favorites/delete', [FavoriteController::class, 'destroy']);
+Route::middleware(['GraphQlRedirectMiddleware'])->group(function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    
+    Route::get('/news', [NewsController::class, 'index']);
+    
+    Route::middleware(['auth:api'])->group(function () {
+        // Route::get('/favorites', [FavoriteController::class, 'index']);
+        Route::post('/favorites', [FavoriteController::class, 'create']);
+        Route::post('/favorites/delete', [FavoriteController::class, 'destroy']);
+    });
 });
