@@ -23,6 +23,7 @@ services:
         container_name: yodawy-news-backend-php
         volumes: 
             - ./src:/var/www/html
+        command: "bash -c 'composer install --ignore-platform-reqs && php-fpm'"
         ports: 
             - "9000:9000"
         networks: 

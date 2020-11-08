@@ -1,5 +1,11 @@
-FROM php:7.3-fpm-stretch
+# FROM composer as builder
+# WORKDIR /app/
+# COPY src/composer.json src/composer.lock ./
+# RUN composer install  --ignore-platform-reqs --no-scripts
 
+# -------
+
+FROM php:7.3-fpm-stretch
 
 RUN apt-get update && apt-get install -qy --no-install-recommends \
     curl \
@@ -40,7 +46,15 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 # Install laravel Installer
 RUN composer global require laravel/installer
 
+RUN curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh
+RUN apt install -qy nodejs
+
 WORKDIR /var/www/html
 
-COPY src/composer.json src/composer.lock ./
-RUN composer install
+COPY ./src .
+
+# COPY --from=builder /app/vendor /var/www/html/vendor
+
+# RUN composer dump-autoload --optimize
+
