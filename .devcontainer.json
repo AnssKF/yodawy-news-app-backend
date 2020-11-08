@@ -12,7 +12,8 @@
         "oderwat.indent-rainbow",
         "HookyQR.beautify",
         "onecentlin.laravel-blade",
-        "formulahendry.auto-close-tag"
+        "formulahendry.auto-close-tag",
+        "octref.vetur"
     ],
     "settings": {
         "workbench.colorTheme": "SynthWave '84",
