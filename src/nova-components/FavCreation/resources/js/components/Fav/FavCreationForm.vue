@@ -1,85 +1,72 @@
 <template>
     <div>
-        <h2 class="my-3">Create Fav</h2>
+
+
         <form @submit.prevent="handleSubmit">
-            <div class="card">
-                <div class="flex border-b border-40">
-                    <div class="w-1/5 px-8 py-6">
-                        <label for="url" 
-                            class="inline-block text-80 pt-2 leading-tight"
-                            :class="{'text-danger': invalidUrl && form.url.touched && form.url.value !== ''}">
-                            Url
-                        </label>
-                    </div> 
-                    <div class="py-6 px-8 w-1/2">
-                        <input 
+            <div class="card mt-6">
+                <div class="pt-6 px-8">
+                    <h2 class="my-3">Create Fav</h2>
+                </div>
+
+                <!-- URL -->
+                <div class="border-b border-40">
+                    <div class="py-6 px-8">
+                        <FormField 
                             v-model="form.url.value"
                             @blur="form.url.touched = true"
                             id="url" 
                             type="text" 
-                            placeholder="Url" 
-                            class="w-full form-control form-input form-input-bordered"> 
-
-                            <span v-if="invalidUrl && form.url.touched && form.url.value !== ''" class="mt-2 text-danger">Please enter a valid URL.</span>
+                            :danger="invalidUrl && form.url.touched && form.url.value !== ''"
+                            help-text="Please enter a valid URL."
+                        >URL</FormField>
                     </div>
                 </div>
+                <!-- ./URL -->
 
-                <div class="flex border-b border-40">
-                    <div class="w-1/5 px-8 py-6">
-                        <label for="PublishedAt" 
-                            class="inline-block text-80 pt-2 leading-tight"
-                            :class="{'text-danger': invalidPublishedAt && form.publishedAt.touched && form.publishedAt.value !== ''}">
-                            Published At
-                        </label>
-                    </div> 
-                    <div class="py-6 px-8 w-1/2">
-                        <input 
+                <!-- PublishedAt -->
+                <div class="border-b border-40">
+                    <div class="py-6 px-8">
+                        <FormField 
                             v-model="form.publishedAt.value"
                             @blur="form.publishedAt.touched = true"
                             id="publishedAt" 
                             type="date" 
-                            placeholder="publishedAt" 
-                            class="w-full form-control form-input form-input-bordered"> 
-
-                            <span v-if="invalidPublishedAt && form.publishedAt.touched && form.publishedAt.value !== ''" class="mt-2 text-danger">Please enter a valid date yyyy-mm-dd.</span>
+                            :danger="invalidPublishedAt && form.publishedAt.touched && form.publishedAt.value !== ''"
+                            help-text="Please enter a valid date yyyy-mm-dd."
+                        >Published At</FormField>
                     </div>
                 </div>
+                <!-- ./PublishedAt -->
 
-                <div class="flex border-b border-40">
-                    <div class="w-1/5 px-8 py-6">
-                        <label 
-                            for="user_id" 
-                            class="inline-block text-80 pt-2 leading-tight"
-                            :class="{'text-danger': invalidUser && form.user.touched && form.user.value !== ''}">
-                            User
-                        </label>
-                    </div> 
-                    <div class="py-6 px-8 w-1/2">
-                        <input 
-                            v-model="form.user.display"
-                            @blur="form.user.touched = true"
-                            readonly
-                            id="user_id" 
-                            type="text" 
-                            placeholder="User" 
-                            class="w-full form-control form-input form-input-bordered"> 
+                <!-- USER -->
+                <div class="border-b border-40">
+                    <div class="py-6 px-8">
+
+                        <!-- Selected User -->
+                        <div class="mb-3 pl-1">
+                            <span class="font-bold">User{{ form.user.display ? `: ${form.user.display}`: '' }}</span>
+                        </div>
                     
-                        <!-- Search Users -->
-                        <div class="form-input px-0 border border-60 pin-t pin-l my-1 overflow-hidden" style="width: 100%;">
-                            <div class="p-2 bg-grey-300">
-                                <input 
+                        <!-- SearchUsers -->
+                        <div class="px-0 overflow-hidden" style="width: 100%;">
+                            
+                            <!-- SearchField -->
+                            <div class="bg-grey-300">
+                                <FormField 
+                                    v-model="userSearch"
                                     @input="handleSearchUser"
                                     @blur="form.user.touched = true"
-                                    v-model="userSearch"
+                                    id="searchUsers" 
                                     type="text" 
-                                    placeholder="Search" 
-                                    spellcheck="false" 
-                                    class="outline-none search-input-input w-full px-2 py-1.5 text-sm leading-normal bg-white rounded">
+                                    :danger="invalidUser && form.user.touched && form.user.value !== ''"
+                                    help-text="Please select a valid user."
+                                >Select User</FormField>
                             </div>
+                            <!-- ./SearchField -->
 
-                            <div tabindex="-1" class="search-input-options relative overflow-y-scroll scrolling-touch text-sm" style="max-height: 155px;">
-
-                                <!-- Result option -->
+                            <div class="search-input-options relative overflow-y-scroll scrolling-touch text-sm" style="max-height: 155px;">
+                                
+                                <!-- Resultoption -->
                                 <div v-if="availableUsers.length">
                                     <div v-for="user in availableUsers" :key="user.value" @click="selectUser(user)"
                                         class="px-4 py-2 cursor-pointer search-input-item-0 text-white">
@@ -107,19 +94,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- ./Resultoption -->
 
                             </div>
-                        </div> <!-- ./search -->
-
-                        <span v-if="invalidUser && form.user.touched && form.user.value !== ''" class="mt-2 text-danger">Please select a valid user.</span>
+                        </div>
+                        <!-- ./SearchUsers -->
                     
                     </div>
                 </div>
+                <!-- ./USER -->
 
+            </div> <!-- ./card -->
 
-            </div>
-
-            <div class="flex justify-content-end mt-3">
+            <div class="flex justify-end mt-3">
                 <button 
                     :disabled="invalidUrl || invalidPublishedAt || invalidUser"
                     type="submit" 
@@ -127,13 +114,20 @@
                     Create Fav
                 </button>
             </div>
+
         </form>
     </div>
 </template>
 
 <script>
+import FormField from '../custom/FormField.vue';
+
 export default {
     name: 'FavCreationForm',
+
+    components: {
+        FormField
+    },
 
     data(){
         return {
@@ -184,12 +178,12 @@ export default {
             })
                 .then( _ => {
                     Nova.success('Created')
-                } )
+                    this.resetForm()
+                })
                 .catch( _ => {
                     Nova.error('Error')
-                } )
+                })
             
-            this.resetForm()
         },
 
         handleSearchUser() {

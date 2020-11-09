@@ -278,7 +278,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Scoped Styles */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Scoped Styles */\n", ""]);
 
 // exports
 
@@ -648,10 +648,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         FavCreationForm: __WEBPACK_IMPORTED_MODULE_0__Fav_FavCreationForm_vue___default.a
-    },
-
-    mounted: function mounted() {
-        //
     }
 });
 
@@ -708,18 +704,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_FormField_vue__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_FormField_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__custom_FormField_vue__);
 //
 //
 //
@@ -842,8 +828,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'FavCreationForm',
+
+    components: {
+        FormField: __WEBPACK_IMPORTED_MODULE_0__custom_FormField_vue___default.a
+    },
 
     data: function data() {
         return {
@@ -886,6 +878,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         handleSubmit: function handleSubmit() {
+            var _this = this;
+
             var url = this.form.url.value;
             var publishedAt = this.form.publishedAt.value;
             var user = this.form.user.value;
@@ -894,14 +888,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 url: url, publishedAt: publishedAt, user: user
             }).then(function (_) {
                 Nova.success('Created');
+                _this.resetForm();
             }).catch(function (_) {
                 Nova.error('Error');
             });
-
-            this.resetForm();
         },
         handleSearchUser: function handleSearchUser() {
-            var _this = this;
+            var _this2 = this;
 
             if (this.userSearch === '') return this.availableUsers = [];
             Nova.request().get('/nova-api/favs/associatable/user', {
@@ -913,8 +906,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     viaResourceId: ''
                 }
             }).then(function (res) {
-                if (_this.userSearch === '') return;
-                _this.availableUsers = res.data.resources;
+                if (_this2.userSearch === '') return;
+                _this2.availableUsers = res.data.resources;
             }).catch(function (_) {
                 Nova.error('Error searching for user');
             });
@@ -954,8 +947,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h2", { staticClass: "my-3" }, [_vm._v("Create Fav")]),
-    _vm._v(" "),
     _c(
       "form",
       {
@@ -967,225 +958,147 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "flex border-b border-40" }, [
-            _c("div", { staticClass: "w-1/5 px-8 py-6" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "inline-block text-80 pt-2 leading-tight",
-                  class: {
-                    "text-danger":
-                      _vm.invalidUrl &&
-                      _vm.form.url.touched &&
-                      _vm.form.url.value !== ""
-                  },
-                  attrs: { for: "url" }
-                },
-                [_vm._v("\n                        Url\n                    ")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "py-6 px-8 w-1/2" }, [
-              _c("input", {
-                directives: [
+        _c("div", { staticClass: "card mt-6" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "border-b border-40" }, [
+            _c(
+              "div",
+              { staticClass: "py-6 px-8" },
+              [
+                _c(
+                  "FormField",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.url.value,
-                    expression: "form.url.value"
-                  }
-                ],
-                staticClass:
-                  "w-full form-control form-input form-input-bordered",
-                attrs: { id: "url", type: "text", placeholder: "Url" },
-                domProps: { value: _vm.form.url.value },
-                on: {
-                  blur: function($event) {
-                    _vm.form.url.touched = true
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                    attrs: {
+                      id: "url",
+                      type: "text",
+                      danger:
+                        _vm.invalidUrl &&
+                        _vm.form.url.touched &&
+                        _vm.form.url.value !== "",
+                      "help-text": "Please enter a valid URL."
+                    },
+                    on: {
+                      blur: function($event) {
+                        _vm.form.url.touched = true
+                      }
+                    },
+                    model: {
+                      value: _vm.form.url.value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.url, "value", $$v)
+                      },
+                      expression: "form.url.value"
                     }
-                    _vm.$set(_vm.form.url, "value", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.invalidUrl &&
-              _vm.form.url.touched &&
-              _vm.form.url.value !== ""
-                ? _c("span", { staticClass: "mt-2 text-danger" }, [
-                    _vm._v("Please enter a valid URL.")
-                  ])
-                : _vm._e()
-            ])
+                  },
+                  [_vm._v("URL")]
+                )
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "flex border-b border-40" }, [
-            _c("div", { staticClass: "w-1/5 px-8 py-6" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "inline-block text-80 pt-2 leading-tight",
-                  class: {
-                    "text-danger":
-                      _vm.invalidPublishedAt &&
-                      _vm.form.publishedAt.touched &&
-                      _vm.form.publishedAt.value !== ""
+          _c("div", { staticClass: "border-b border-40" }, [
+            _c(
+              "div",
+              { staticClass: "py-6 px-8" },
+              [
+                _c(
+                  "FormField",
+                  {
+                    attrs: {
+                      id: "publishedAt",
+                      type: "date",
+                      danger:
+                        _vm.invalidPublishedAt &&
+                        _vm.form.publishedAt.touched &&
+                        _vm.form.publishedAt.value !== "",
+                      "help-text": "Please enter a valid date yyyy-mm-dd."
+                    },
+                    on: {
+                      blur: function($event) {
+                        _vm.form.publishedAt.touched = true
+                      }
+                    },
+                    model: {
+                      value: _vm.form.publishedAt.value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.publishedAt, "value", $$v)
+                      },
+                      expression: "form.publishedAt.value"
+                    }
                   },
-                  attrs: { for: "PublishedAt" }
-                },
-                [
+                  [_vm._v("Published At")]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "border-b border-40" }, [
+            _c("div", { staticClass: "py-6 px-8" }, [
+              _c("div", { staticClass: "mb-3 pl-1" }, [
+                _c("span", { staticClass: "font-bold" }, [
                   _vm._v(
-                    "\n                        Published At\n                    "
+                    "User" +
+                      _vm._s(
+                        _vm.form.user.display
+                          ? ": " + _vm.form.user.display
+                          : ""
+                      )
                   )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "py-6 px-8 w-1/2" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.publishedAt.value,
-                    expression: "form.publishedAt.value"
-                  }
-                ],
-                staticClass:
-                  "w-full form-control form-input form-input-bordered",
-                attrs: {
-                  id: "publishedAt",
-                  type: "date",
-                  placeholder: "publishedAt"
-                },
-                domProps: { value: _vm.form.publishedAt.value },
-                on: {
-                  blur: function($event) {
-                    _vm.form.publishedAt.touched = true
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form.publishedAt, "value", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.invalidPublishedAt &&
-              _vm.form.publishedAt.touched &&
-              _vm.form.publishedAt.value !== ""
-                ? _c("span", { staticClass: "mt-2 text-danger" }, [
-                    _vm._v("Please enter a valid date yyyy-mm-dd.")
-                  ])
-                : _vm._e()
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex border-b border-40" }, [
-            _c("div", { staticClass: "w-1/5 px-8 py-6" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "inline-block text-80 pt-2 leading-tight",
-                  class: {
-                    "text-danger":
-                      _vm.invalidUser &&
-                      _vm.form.user.touched &&
-                      _vm.form.user.value !== ""
-                  },
-                  attrs: { for: "user_id" }
-                },
-                [_vm._v("\n                        User\n                    ")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "py-6 px-8 w-1/2" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.user.display,
-                    expression: "form.user.display"
-                  }
-                ],
-                staticClass:
-                  "w-full form-control form-input form-input-bordered",
-                attrs: {
-                  readonly: "",
-                  id: "user_id",
-                  type: "text",
-                  placeholder: "User"
-                },
-                domProps: { value: _vm.form.user.display },
-                on: {
-                  blur: function($event) {
-                    _vm.form.user.touched = true
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form.user, "display", $event.target.value)
-                  }
-                }
-              }),
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass:
-                    "form-input px-0 border border-60 pin-t pin-l my-1 overflow-hidden",
+                  staticClass: "px-0 overflow-hidden",
                   staticStyle: { width: "100%" }
                 },
                 [
-                  _c("div", { staticClass: "p-2 bg-grey-300" }, [
-                    _c("input", {
-                      directives: [
+                  _c(
+                    "div",
+                    { staticClass: "bg-grey-300" },
+                    [
+                      _c(
+                        "FormField",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.userSearch,
-                          expression: "userSearch"
-                        }
-                      ],
-                      staticClass:
-                        "outline-none search-input-input w-full px-2 py-1.5 text-sm leading-normal bg-white rounded",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Search",
-                        spellcheck: "false"
-                      },
-                      domProps: { value: _vm.userSearch },
-                      on: {
-                        input: [
-                          function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.userSearch = $event.target.value
+                          attrs: {
+                            id: "searchUsers",
+                            type: "text",
+                            danger:
+                              _vm.invalidUser &&
+                              _vm.form.user.touched &&
+                              _vm.form.user.value !== "",
+                            "help-text": "Please select a valid user."
                           },
-                          _vm.handleSearchUser
-                        ],
-                        blur: function($event) {
-                          _vm.form.user.touched = true
-                        }
-                      }
-                    })
-                  ]),
+                          on: {
+                            input: _vm.handleSearchUser,
+                            blur: function($event) {
+                              _vm.form.user.touched = true
+                            }
+                          },
+                          model: {
+                            value: _vm.userSearch,
+                            callback: function($$v) {
+                              _vm.userSearch = $$v
+                            },
+                            expression: "userSearch"
+                          }
+                        },
+                        [_vm._v("Select User")]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "div",
                     {
                       staticClass:
                         "search-input-options relative overflow-y-scroll scrolling-touch text-sm",
-                      staticStyle: { "max-height": "155px" },
-                      attrs: { tabindex: "-1" }
+                      staticStyle: { "max-height": "155px" }
                     },
                     [
                       _vm.availableUsers.length
@@ -1243,25 +1156,17 @@ var render = function() {
                         : _vm._e(),
                       _vm._v(" "),
                       _vm.availableUsers.length === 0 && this.userSearch !== ""
-                        ? _c("div", [_vm._m(0)])
+                        ? _c("div", [_vm._m(1)])
                         : _vm._e()
                     ]
                   )
                 ]
-              ),
-              _vm._v(" "),
-              _vm.invalidUser &&
-              _vm.form.user.touched &&
-              _vm.form.user.value !== ""
-                ? _c("span", { staticClass: "mt-2 text-danger" }, [
-                    _vm._v("Please select a valid user.")
-                  ])
-                : _vm._e()
+              )
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "flex justify-content-end mt-3" }, [
+        _c("div", { staticClass: "flex justify-end mt-3" }, [
           _c(
             "button",
             {
@@ -1281,6 +1186,14 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pt-6 px-8" }, [
+      _c("h2", { staticClass: "my-3" }, [_vm._v("Create Fav")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -1349,6 +1262,180 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(19)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(21)
+/* template */
+var __vue_template__ = __webpack_require__(22)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-6708f0ba"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/custom/FormField.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6708f0ba", Component.options)
+  } else {
+    hotAPI.reload("data-v-6708f0ba", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(20);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("197c04b8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6708f0ba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormField.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6708f0ba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormField.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.group[data-v-6708f0ba] {\n    position: relative;\n}\ninput[data-v-6708f0ba] {\n    font-size: 1rem;\n    padding: 5px 5px;\n    display: block;\n    width: 100%;\n    border: none;\n    border-bottom: 1px solid #757575;\n}\ninput[data-v-6708f0ba]:focus {\n    outline: none;\n}\nlabel[data-v-6708f0ba] {\n    /* color: #999; */\n    font-size: 1rem;\n    font-weight: normal;\n    position: absolute;\n    pointer-events: none;\n    left: 5px;\n    top: 0px;\n    transition: 0.2s ease all;\n    -moz-transition: 0.2s ease all;\n    -webkit-transition: 0.2s ease all;\n}\ninput:focus~label[data-v-6708f0ba],\ninput:valid~label[data-v-6708f0ba] {\n    top: -15px;\n    font-size: 14px;\n    /* color: var(--primary); */\n}\n.bar[data-v-6708f0ba] {\n    position: relative;\n    display: block;\n}\n.bar[data-v-6708f0ba]:before,\n.bar[data-v-6708f0ba]:after {\n    content: '';\n    height: 2px;\n    width: 0;\n    bottom: 0px;\n    position: absolute;\n    background: var(--primary);\n    transition: 0.2s ease all;\n    -moz-transition: 0.2s ease all;\n    -webkit-transition: 0.2s ease all;\n}\n.bar[data-v-6708f0ba]:before {\n    left: 50%;\n}\n.bar[data-v-6708f0ba]:after {\n    right: 50%;\n}\ninput:focus~.bar[data-v-6708f0ba]:before,\ninput:focus~.bar[data-v-6708f0ba]:after {\n    width: 50%;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'FormField',
+    props: ['value', 'danger', 'help-text']
+});
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "group mb-2 mt-4" }, [
+    _c(
+      "input",
+      _vm._b(
+        {
+          ref: "inputfield",
+          domProps: { value: _vm.value },
+          on: {
+            blur: function($event) {
+              return _vm.$emit("blur")
+            },
+            input: function($event) {
+              return _vm.$emit("input", _vm.$refs.inputfield.value)
+            }
+          }
+        },
+        "input",
+        _vm.$attrs,
+        false
+      )
+    ),
+    _vm._v(" "),
+    _c("span", { staticClass: "bar" }),
+    _vm._v(" "),
+    _c(
+      "label",
+      { class: !!_vm.danger ? "text-danger" : "text-primary" },
+      [_vm._t("default")],
+      2
+    ),
+    _vm._v(" "),
+    !!_vm.danger
+      ? _c("span", { staticClass: "mt-2 text-danger help-text" }, [
+          _vm._v(_vm._s(_vm.helpText))
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6708f0ba", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
