@@ -15,6 +15,7 @@
                         @blur="form.url.touched = true"
                         id="url" 
                         type="text" 
+                        placeholder="URL of headline from newsapi.org"
                         :danger="invalidUrl && form.url.touched && form.url.value !== ''"
                         help-text="Please enter a valid URL."
                     >URL</FormField>
@@ -28,6 +29,7 @@
                         @blur="form.publishedAt.touched = true"
                         id="publishedAt" 
                         type="date" 
+                        placeholder="Headline publish date"
                         :danger="invalidPublishedAt && form.publishedAt.touched && form.publishedAt.value !== ''"
                         help-text="Please enter a valid date yyyy-mm-dd."
                     >Published At</FormField>
@@ -53,6 +55,7 @@
                                 @blur="form.user.touched = true"
                                 id="searchUsers" 
                                 type="text" 
+                                placeholder="Search by username or email"
                                 :danger="invalidUser && form.user.touched && form.user.value !== ''"
                                 help-text="Please select a valid user."
                             >Select User</FormField>
