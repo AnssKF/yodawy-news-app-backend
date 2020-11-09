@@ -1,113 +1,104 @@
 <template>
     <div class="c-fav-creation-form">
 
-
         <form @submit.prevent="handleSubmit">
-            <div class="c-card py-2">
+            <div class="c-card">
 
-                <div class="c-card__title__border-left mt-6 py-3">
-                    <div class="px-8">
-                        <h2 class="my-3">Create Fav</h2>
-                    </div>
+                <div class="c-card__title-wrapper c-card__title__border-left">
+                    <h2 class="c-card__title">Create Fav</h2>
                 </div>
 
                 <!-- URL -->
-                <div class="c-border-bottom">
-                    <div class="py-6 px-8">
-                        <FormField 
-                            v-model="form.url.value"
-                            @blur="form.url.touched = true"
-                            id="url" 
-                            type="text" 
-                            :danger="invalidUrl && form.url.touched && form.url.value !== ''"
-                            help-text="Please enter a valid URL."
-                        >URL</FormField>
-                    </div>
+                <div class="c-form-field-wrapper c-border-bottom">
+                    <FormField 
+                        v-model="form.url.value"
+                        @blur="form.url.touched = true"
+                        id="url" 
+                        type="text" 
+                        :danger="invalidUrl && form.url.touched && form.url.value !== ''"
+                        help-text="Please enter a valid URL."
+                    >URL</FormField>
                 </div>
                 <!-- ./URL -->
 
                 <!-- PublishedAt -->
-                <div class="c-border-bottom">
-                    <div class="py-6 px-8">
-                        <FormField 
-                            v-model="form.publishedAt.value"
-                            @blur="form.publishedAt.touched = true"
-                            id="publishedAt" 
-                            type="date" 
-                            :danger="invalidPublishedAt && form.publishedAt.touched && form.publishedAt.value !== ''"
-                            help-text="Please enter a valid date yyyy-mm-dd."
-                        >Published At</FormField>
-                    </div>
+                <div class="c-form-field-wrapper c-border-bottom">
+                    <FormField 
+                        v-model="form.publishedAt.value"
+                        @blur="form.publishedAt.touched = true"
+                        id="publishedAt" 
+                        type="date" 
+                        :danger="invalidPublishedAt && form.publishedAt.touched && form.publishedAt.value !== ''"
+                        help-text="Please enter a valid date yyyy-mm-dd."
+                    >Published At</FormField>
                 </div>
                 <!-- ./PublishedAt -->
 
                 <!-- USER -->
-                <div class="c-border-bottom">
-                    <div class="py-6 px-8">
+                <div class="c-form-field-wrapper c-border-bottom">
 
-                        <!-- Selected User -->
-                        <div class="mb-3 pl-1">
-                            <span class="font-bold">User{{ form.user.display ? `: ${form.user.display}`: '' }}</span>
-                        </div>
-                    
-                        <!-- SearchUsers -->
-                        <div class="px-0 overflow-hidden">
-                            
-                            <!-- SearchField -->
-                            <div class="bg-grey-300">
-                                <FormField 
-                                    v-model="userSearch"
-                                    @input="handleSearchUser"
-                                    @blur="form.user.touched = true"
-                                    id="searchUsers" 
-                                    type="text" 
-                                    :danger="invalidUser && form.user.touched && form.user.value !== ''"
-                                    help-text="Please select a valid user."
-                                >Select User</FormField>
-                            </div>
-                            <!-- ./SearchField -->
-
-                            <div class="c-search-options overflow-y-scroll">
-                                
-                                <!-- Resultoption -->
-                                <div v-if="availableUsers.length">
-                                    <div v-for="user in availableUsers" :key="user.value" @click="selectUser(user)"
-                                        class="px-4 py-2 cursor-pointer text-white">
-                                        <div class="flex items-center">
-                                            <div class="mr-3">
-                                                <img :src="user.avatar" class="w-8 h-8 rounded-full block">
-                                            </div> 
-                                            <div>
-                                                <div class="text-sm font-semibold leading-5 text-90">
-                                                    {{ user.display }}
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div v-if="availableUsers.length === 0 && this.userSearch !== ''">
-                                    <div class="px-4 py-2 cursor-pointer text-white">
-                                        <div class="flex items-center">
-                                            <div>
-                                                <div class="text-sm font-semibold leading-5 text-90 text-danger">
-                                                    There is no user exist.
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- ./Resultoption -->
-
-                            </div>
-                        </div>
-                        <!-- ./SearchUsers -->
-                    
+                    <!-- Selected User -->
+                    <div class="selected-user">
+                        <span>User{{ form.user.display ? `: ${form.user.display}`: '' }}</span>
                     </div>
+                
+                    <!-- SearchUsers -->
+                    <div class="search-users">
+                        
+                        <!-- SearchField -->
+                        <div>
+                            <FormField 
+                                v-model="userSearch"
+                                @input="handleSearchUser"
+                                @blur="form.user.touched = true"
+                                id="searchUsers" 
+                                type="text" 
+                                :danger="invalidUser && form.user.touched && form.user.value !== ''"
+                                help-text="Please select a valid user."
+                            >Select User</FormField>
+                        </div>
+                        <!-- ./SearchField -->
+
+                        <div class="c-search-options">
+                            
+                            <!-- Resultoption -->
+                            <div v-if="availableUsers.length">
+                                <div v-for="user in availableUsers" :key="user.value" @click="selectUser(user)"
+                                    class="search-option-wrapper">
+                                    <div class="search-option">
+                                        <div class="search-option__avatar">
+                                            <img :src="user.avatar">
+                                        </div> 
+                                        <div class="search-option__display">
+                                            <div>
+                                                {{ user.display }}
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-if="availableUsers.length === 0 && this.userSearch !== ''">
+                                <div class="search-option-wrapper">
+                                    <div class="search-option">
+                                        <div>
+                                            <div class="search-option__display danger">
+                                                There is no user exist.
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ./Resultoption -->
+
+                        </div>
+                    </div>
+                    <!-- ./SearchUsers -->
+                
                 </div>
                 <!-- ./USER -->
 
-                <div class="flex justify-end m-6">
+                <div class="c-form-footer">
                     <button 
                         :disabled="invalidUrl || invalidPublishedAt || invalidUser"
                         type="submit" 
