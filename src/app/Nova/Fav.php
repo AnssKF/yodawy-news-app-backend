@@ -9,6 +9,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 use Laravel\Nova\Fields\BelongsTo;
 
+use App\Models\Favorite;
+
 class Fav extends Resource
 {
     /**
@@ -16,7 +18,7 @@ class Fav extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Favorite::class;
+    public static $model = Favorite::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -43,9 +45,9 @@ class Fav extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('url')->showOnIndex(),
-            Text::make('publishedAt', 'publishedAt'),
-            BelongsTo::make('User')->searchable()
+            Text::make('Url', 'url')->showOnIndex(),
+            Text::make('Published at', 'publishedAt'),
+            BelongsTo::make('User', 'user')->searchable()
         ];
     }
 

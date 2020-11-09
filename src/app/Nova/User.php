@@ -10,6 +10,8 @@ use Laravel\Nova\Fields\Text;
 
 use Laravel\Nova\Fields\HasMany;
 
+use App\Models\User as UserModel;
+
 class User extends Resource
 {
     /**
@@ -17,7 +19,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = UserModel::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -48,22 +50,22 @@ class User extends Resource
 
             Gravatar::make()->maxWidth(50),
 
-            Text::make('Name')
+            Text::make('Name', 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Email')
+            Text::make('Email', 'email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Password::make('Password')
+            Password::make('Password', 'password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            HasMany::make('Favs')
+            HasMany::make('Favs', 'favs')
         ];
     }
 
@@ -110,4 +112,6 @@ class User extends Resource
     {
         return [];
     }
+
+    public static $with = ['favs'];
 }
