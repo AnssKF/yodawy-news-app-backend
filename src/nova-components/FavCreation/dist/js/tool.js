@@ -704,8 +704,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_FormField_vue__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_FormField_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__custom_FormField_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_FormField_FormField_vue__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_FormField_FormField_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__custom_FormField_FormField_vue__);
 //
 //
 //
@@ -834,7 +834,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'FavCreationForm',
 
     components: {
-        FormField: __WEBPACK_IMPORTED_MODULE_0__custom_FormField_vue___default.a
+        FormField: __WEBPACK_IMPORTED_MODULE_0__custom_FormField_FormField_vue___default.a
     },
 
     data: function data() {
@@ -1267,25 +1267,33 @@ if (false) {
 /* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(19)
+  __webpack_require__(27)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(21)
+var __vue_script__ = __webpack_require__(29)
 /* template */
-var __vue_template__ = __webpack_require__(22)
+var __vue_template__ = __webpack_require__(30)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-6708f0ba"
+var __vue_scopeId__ = "data-v-676bed8a"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -1296,7 +1304,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/custom/FormField.vue"
+Component.options.__file = "resources/js/components/custom/FormField/FormField.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -1305,9 +1313,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6708f0ba", Component.options)
+    hotAPI.createRecord("data-v-676bed8a", Component.options)
   } else {
-    hotAPI.reload("data-v-6708f0ba", Component.options)
+    hotAPI.reload("data-v-676bed8a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -1318,23 +1326,23 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 19 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(20);
+var content = __webpack_require__(28);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("197c04b8", content, false, {});
+var update = __webpack_require__(7)("58f79921", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6708f0ba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormField.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6708f0ba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormField.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-676bed8a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormField.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-676bed8a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormField.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -1344,21 +1352,21 @@ if(false) {
 }
 
 /***/ }),
-/* 20 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)(false);
 // imports
-
+exports.i(__webpack_require__(32), "");
 
 // module
-exports.push([module.i, "\n.group[data-v-6708f0ba] {\n    position: relative;\n}\ninput[data-v-6708f0ba] {\n    font-size: 1rem;\n    padding: 5px 5px;\n    display: block;\n    width: 100%;\n    border: none;\n    border-bottom: 1px solid #757575;\n}\ninput[data-v-6708f0ba]:focus {\n    outline: none;\n}\nlabel[data-v-6708f0ba] {\n    /* color: #999; */\n    font-size: 1rem;\n    font-weight: normal;\n    position: absolute;\n    pointer-events: none;\n    left: 5px;\n    top: 0px;\n    transition: 0.2s ease all;\n    -moz-transition: 0.2s ease all;\n    -webkit-transition: 0.2s ease all;\n}\ninput:focus~label[data-v-6708f0ba],\ninput:valid~label[data-v-6708f0ba] {\n    top: -15px;\n    font-size: 14px;\n    /* color: var(--primary); */\n}\n.bar[data-v-6708f0ba] {\n    position: relative;\n    display: block;\n}\n.bar[data-v-6708f0ba]:before,\n.bar[data-v-6708f0ba]:after {\n    content: '';\n    height: 2px;\n    width: 0;\n    bottom: 0px;\n    position: absolute;\n    background: var(--primary);\n    transition: 0.2s ease all;\n    -moz-transition: 0.2s ease all;\n    -webkit-transition: 0.2s ease all;\n}\n.bar[data-v-6708f0ba]:before {\n    left: 50%;\n}\n.bar[data-v-6708f0ba]:after {\n    right: 50%;\n}\ninput:focus~.bar[data-v-6708f0ba]:before,\ninput:focus~.bar[data-v-6708f0ba]:after {\n    width: 50%;\n}\n\n", ""]);
+exports.push([module.i, "\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 21 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1382,14 +1390,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 22 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "group mb-2 mt-4" }, [
+  return _c("div", { staticClass: "c-ff-group mb-2 mt-4" }, [
     _c(
       "input",
       _vm._b(
@@ -1433,9 +1441,24 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6708f0ba", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-676bed8a", module.exports)
   }
 }
+
+/***/ }),
+/* 31 */,
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.c-ff-group {\n    position: relative;\n}\n\n.c-ff-group input {\n    font-size: 1rem;\n    padding: 5px 5px;\n    display: block;\n    width: 100%;\n    border: none;\n    border-bottom: 1px solid #757575;\n}\n\n.c-ff-group input:focus {\n    outline: none;\n}\n\n.c-ff-group label {\n    /* color: #999; */\n    font-size: 1rem;\n    font-weight: normal;\n    position: absolute;\n    pointer-events: none;\n    left: 5px;\n    top: 0px;\n    transition: 0.2s ease all;\n    -moz-transition: 0.2s ease all;\n    -webkit-transition: 0.2s ease all;\n}\n\n.c-ff-group input:focus~label,\n.c-ff-group input:valid~label {\n    top: -15px;\n    font-size: 14px;\n    /* color: var(--primary); */\n}\n\n.c-ff-group .bar {\n    position: relative;\n    display: block;\n}\n\n.c-ff-group .bar:before,\n.c-ff-group .bar:after {\n    content: '';\n    height: 2px;\n    width: 0;\n    bottom: 0px;\n    position: absolute;\n    background: var(--primary);\n    transition: 0.2s ease all;\n    -moz-transition: 0.2s ease all;\n    -webkit-transition: 0.2s ease all;\n}\n\n.c-ff-group .bar:before {\n    left: 50%;\n}\n\n.c-ff-group .bar:after {\n    right: 50%;\n}\n\n.c-ff-group input:focus~.bar:before,\n.c-ff-group input:focus~.bar:after {\n    width: 50%;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

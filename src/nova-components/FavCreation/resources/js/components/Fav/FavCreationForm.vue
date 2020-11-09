@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import FormField from '../custom/FormField.vue';
+import FormField from '../custom/FormField/FormField.vue';
 
 export default {
     name: 'FavCreationForm',

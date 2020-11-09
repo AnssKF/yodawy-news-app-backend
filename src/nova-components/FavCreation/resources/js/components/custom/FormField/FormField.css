@@ -1,29 +1,9 @@
-<template>
-    <div class="group mb-2 mt-4">
-        <input v-bind="$attrs" ref="inputfield" @blur="$emit('blur')" @input="$emit('input', $refs.inputfield.value)" :value="value"/>
-        <span class="bar"></span>
-        <label :class="!!danger? 'text-danger': 'text-primary'">
-            <slot></slot>
-        </label>
 
-        <span v-if="!!danger" class="mt-2 text-danger help-text">{{ helpText }}</span>
-    </div>
-</template>
-
-<script>
-export default {
-    name: 'FormField',
-    props: ['value', 'danger', 'help-text']
-}
-</script>
-
-<style scoped>
-
-.group {
+.c-ff-group {
     position: relative;
 }
 
-input {
+.c-ff-group input {
     font-size: 1rem;
     padding: 5px 5px;
     display: block;
@@ -32,11 +12,11 @@ input {
     border-bottom: 1px solid #757575;
 }
 
-input:focus {
+.c-ff-group input:focus {
     outline: none;
 }
 
-label {
+.c-ff-group label {
     /* color: #999; */
     font-size: 1rem;
     font-weight: normal;
@@ -49,20 +29,20 @@ label {
     -webkit-transition: 0.2s ease all;
 }
 
-input:focus~label,
-input:valid~label {
+.c-ff-group input:focus~label,
+.c-ff-group input:valid~label {
     top: -15px;
     font-size: 14px;
     /* color: var(--primary); */
 }
 
-.bar {
+.c-ff-group .bar {
     position: relative;
     display: block;
 }
 
-.bar:before,
-.bar:after {
+.c-ff-group .bar:before,
+.c-ff-group .bar:after {
     content: '';
     height: 2px;
     width: 0;
@@ -74,17 +54,15 @@ input:valid~label {
     -webkit-transition: 0.2s ease all;
 }
 
-.bar:before {
+.c-ff-group .bar:before {
     left: 50%;
 }
 
-.bar:after {
+.c-ff-group .bar:after {
     right: 50%;
 }
 
-input:focus~.bar:before,
-input:focus~.bar:after {
+.c-ff-group input:focus~.bar:before,
+.c-ff-group input:focus~.bar:after {
     width: 50%;
 }
-
-</style>
