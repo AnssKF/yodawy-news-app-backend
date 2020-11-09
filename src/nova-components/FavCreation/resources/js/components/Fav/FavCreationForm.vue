@@ -1,15 +1,18 @@
 <template>
-    <div>
+    <div class="c-fav-creation-form">
 
 
         <form @submit.prevent="handleSubmit">
-            <div class="card mt-6">
-                <div class="pt-6 px-8">
-                    <h2 class="my-3">Create Fav</h2>
+            <div class="c-card py-2">
+
+                <div class="c-card__title__border-left mt-6 py-3">
+                    <div class="px-8">
+                        <h2 class="my-3">Create Fav</h2>
+                    </div>
                 </div>
 
                 <!-- URL -->
-                <div class="border-b border-40">
+                <div class="c-border-bottom">
                     <div class="py-6 px-8">
                         <FormField 
                             v-model="form.url.value"
@@ -24,7 +27,7 @@
                 <!-- ./URL -->
 
                 <!-- PublishedAt -->
-                <div class="border-b border-40">
+                <div class="c-border-bottom">
                     <div class="py-6 px-8">
                         <FormField 
                             v-model="form.publishedAt.value"
@@ -39,7 +42,7 @@
                 <!-- ./PublishedAt -->
 
                 <!-- USER -->
-                <div class="border-b border-40">
+                <div class="c-border-bottom">
                     <div class="py-6 px-8">
 
                         <!-- Selected User -->
@@ -48,7 +51,7 @@
                         </div>
                     
                         <!-- SearchUsers -->
-                        <div class="px-0 overflow-hidden" style="width: 100%;">
+                        <div class="px-0 overflow-hidden">
                             
                             <!-- SearchField -->
                             <div class="bg-grey-300">
@@ -64,12 +67,12 @@
                             </div>
                             <!-- ./SearchField -->
 
-                            <div class="search-input-options relative overflow-y-scroll scrolling-touch text-sm" style="max-height: 155px;">
+                            <div class="c-search-options overflow-y-scroll">
                                 
                                 <!-- Resultoption -->
                                 <div v-if="availableUsers.length">
                                     <div v-for="user in availableUsers" :key="user.value" @click="selectUser(user)"
-                                        class="px-4 py-2 cursor-pointer search-input-item-0 text-white">
+                                        class="px-4 py-2 cursor-pointer text-white">
                                         <div class="flex items-center">
                                             <div class="mr-3">
                                                 <img :src="user.avatar" class="w-8 h-8 rounded-full block">
@@ -84,7 +87,7 @@
                                 </div>
 
                                 <div v-if="availableUsers.length === 0 && this.userSearch !== ''">
-                                    <div class="px-4 py-2 cursor-pointer search-input-item-0 text-white">
+                                    <div class="px-4 py-2 cursor-pointer text-white">
                                         <div class="flex items-center">
                                             <div>
                                                 <div class="text-sm font-semibold leading-5 text-90 text-danger">
@@ -104,23 +107,28 @@
                 </div>
                 <!-- ./USER -->
 
+                <div class="flex justify-end m-6">
+                    <button 
+                        :disabled="invalidUrl || invalidPublishedAt || invalidUser"
+                        type="submit" 
+                        class="c-btn c-btn-shadow-effect">
+                        Create Fav
+                    </button>
+                </div>
+
             </div> <!-- ./card -->
 
-            <div class="flex justify-end mt-3">
-                <button 
-                    :disabled="invalidUrl || invalidPublishedAt || invalidUser"
-                    type="submit" 
-                    class="btn btn-default btn-primary inline-flex items-center relative">
-                    Create Fav
-                </button>
-            </div>
 
         </form>
     </div>
 </template>
 
 <script>
+// Components
 import FormField from '../custom/FormField/FormField.vue';
+
+// Styles
+import './FavCreationForm.css'
 
 export default {
     name: 'FavCreationForm',
