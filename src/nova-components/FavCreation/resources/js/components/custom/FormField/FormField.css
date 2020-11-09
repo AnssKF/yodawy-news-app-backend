@@ -1,6 +1,7 @@
 
 .c-ff-group {
     position: relative;
+    margin: var(--mp-4) var(--mp-0) var(--mp-2);
 }
 
 .c-ff-group input {
