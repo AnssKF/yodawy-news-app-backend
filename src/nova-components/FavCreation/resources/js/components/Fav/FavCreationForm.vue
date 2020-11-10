@@ -112,18 +112,11 @@
 </template>
 
 <script>
-// Components
-import FormField from '../custom/FormField/FormField.vue';
-
 // Styles
 import './FavCreationForm.css'
 
 export default {
     name: 'FavCreationForm',
-
-    components: {
-        FormField
-    },
 
     data(){
         return {
@@ -174,6 +167,10 @@ export default {
 
         showUserErrorMessage() {
             return this.invalidUser && this.form.user.touched && this.form.user.value !== ''
+        },
+
+        getSelectedUserName() {
+            return this.form.user.display ? `: ${this.form.user.display}`: ''
         },
         
         submitDisabled() {
