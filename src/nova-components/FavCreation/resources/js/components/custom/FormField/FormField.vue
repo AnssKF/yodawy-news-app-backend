@@ -1,6 +1,6 @@
 <template>
     <div class="c-ff-group">
-        <input v-bind="$attrs" ref="inputfield" v-on="onBlur? {blur: onBlur}: null" @input="$emit('input', $refs.inputfield.value)" :value="value"/>
+        <input v-bind="$attrs" ref="inputfield" @blur="blurHandler" @input="inputHandler" :value="value"/>
         <span class="bar"></span>
         <label :class="getLabelClass">
             <slot></slot>
@@ -29,13 +29,30 @@ export default {
             default: 'Please insert a valid data.'
         },
         onBlur: {
-            type: Function
+            type: Function,
+            default: null
+        },
+        onInput: {
+            type: Function,
+            default: null
         }
     },
 
     computed: {
         getLabelClass() {
             return this.danger? 'text-danger': 'text-primary';
+        }
+    },
+
+    methods: {
+        blurHandler($event) {
+            if(!this.onBlur) return
+            this.onBlur($event)
+        },
+
+        inputHandler($event) {
+            if(!this.onInput) return
+            this.onInput($event)
         }
     },
 }

@@ -11,12 +11,13 @@
                 <!-- URL -->
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
-                        v-model="form.url.value"
+                        :value="form.url.value"
+                        :on-input="setValue('url')"
                         :on-blur="setTouched('url')"
+                        :danger="showUrlErrorMessage"
                         id="url" 
                         type="text" 
                         placeholder="URL of headline from newsapi.org"
-                        :danger="invalidUrl && form.url.touched && form.url.value !== ''"
                         help-text="Please enter a valid URL."
                     >URL</FormField>
                 </div>
@@ -25,12 +26,13 @@
                 <!-- PublishedAt -->
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
-                        v-model="form.publishedAt.value"
-                        id="publishedAt" 
+                        :value="form.publishedAt.value"
+                        :on-input="setValue('publishedAt')"
                         :on-blur="setTouched('publishedAt')"
+                        :danger="showPublishedAtErrorMessage"
+                        id="publishedAt" 
                         type="date" 
                         placeholder="Headline publish date"
-                        :danger="invalidPublishedAt && form.publishedAt.touched && form.publishedAt.value !== ''"
                         help-text="Please enter a valid date yyyy-mm-dd."
                     >Published At</FormField>
                 </div>
@@ -49,13 +51,13 @@
                         
                         <!-- SearchField -->
                             <FormField 
-                                v-model="userSearch"
-                                @input="handleSearchUser"
+                                :value="userSearch"
+                                :on-input="handleSearchUser"
                                 :on-blur="setTouched('user')"
+                                :danger="showUserErrorMessage"
                                 id="searchUsers" 
                                 type="text" 
                                 placeholder="Search by username or email"
-                                :danger="invalidUser && form.user.touched && form.user.value !== ''"
                                 help-text="Please select a valid user."
                             >Select User</FormField>
                         <!-- ./SearchField -->
@@ -75,7 +77,7 @@
                                 </div>
                             </div>
 
-                            <div class="search-option-wrapper" v-if="availableUsers.length === 0 && this.userSearch !== ''">
+                            <div class="search-option-wrapper" v-if="noSearchResults">
                                 <div class="search-option">
                                     <div>
                                         <div class="search-option__display danger">
@@ -95,7 +97,7 @@
 
                 <div class="c-form-footer">
                     <button 
-                        :disabled="invalidUrl || invalidPublishedAt || invalidUser"
+                        :disabled="submitDisabled"
                         type="submit" 
                         class="c-btn c-btn-shadow-effect">
                         Create Fav
@@ -151,14 +153,36 @@ export default {
             const url = this.form.url
             return url.value === '' || !url.value.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)
         },
+
         invalidPublishedAt() {
             const publishedAt = this.form.publishedAt
             return publishedAt.value === '' || !publishedAt.value.match(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
         },
+
         invalidUser() {
             const user = this.form.user
             return user.value === ''
         },
+
+        showUrlErrorMessage() {
+            return this.invalidUrl && this.form.url.touched && this.form.url.value !== ''
+        },
+
+        showPublishedAtErrorMessage() {
+            return this.invalidPublishedAt && this.form.publishedAt.touched && this.form.publishedAt.value !== ''
+        },
+
+        showUserErrorMessage() {
+            return this.invalidUser && this.form.user.touched && this.form.user.value !== ''
+        },
+        
+        submitDisabled() {
+            return this.invalidUrl || this.invalidPublishedAt || this.invalidUser
+        },
+
+        noSearchResults() {
+            return this.availableUsers.length === 0 && this.userSearch !== ''
+        }
     },
 
     methods: {
@@ -180,7 +204,9 @@ export default {
             
         },
 
-        handleSearchUser() {
+        handleSearchUser($e) {
+            this.userSearch = $e.target.value;
+
             if(this.userSearch === '') return this.availableUsers = []
             Nova.request().get('/nova-api/favs/associatable/user', {
                 params: {
@@ -229,6 +255,12 @@ export default {
         setTouched(field) {
             return () => {
                 this.form[field].touched = true;
+            }
+        },
+
+        setValue(field) {
+            return ($e) => {
+                this.form[field].value = $e.target.value;
             }
         }
     }
