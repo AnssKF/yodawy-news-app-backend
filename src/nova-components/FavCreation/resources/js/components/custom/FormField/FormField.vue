@@ -35,6 +35,10 @@ export default {
         onInput: {
             type: Function,
             default: null
+        },
+        extras: {
+            type: Object,
+            default: {}
         }
     },
 
@@ -46,12 +50,16 @@ export default {
 
     methods: {
         blurHandler($event) {
-            if(!this.onBlur) return
+            if(!this.onBlur && !(this.onBlur instanceof Function)) return
+
+            $event.extras = this.extras
             this.onBlur($event)
         },
 
         inputHandler($event) {
-            if(!this.onInput) return
+            if(!this.onInput && !(this.onInput instanceof Function)) return
+
+            $event.extras = this.extras
             this.onInput($event)
         }
     },
