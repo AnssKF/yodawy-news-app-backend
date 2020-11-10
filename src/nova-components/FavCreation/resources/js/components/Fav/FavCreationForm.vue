@@ -140,7 +140,9 @@ export default {
             },
 
             userSearch: '',
-            availableUsers: []
+            availableUsers: [],
+
+            searchUserCancelTokenSource: null,
         }
     },
 
@@ -207,23 +209,32 @@ export default {
         handleSearchUser($e) {
             this.userSearch = $e.target.value;
 
+            if(this.searchUserCancelTokenSource) this.searchUserCancelTokenSource.cancel();
+
             if(this.userSearch === '') return this.availableUsers = []
-            Nova.request().get('/nova-api/favs/associatable/user', {
+
+            // Using axios not Nova.request() so i can cancel old request
+            // Nova.request have an error with axios.isCancel(response)
+
+            this.searchUserCancelTokenSource = axios.CancelToken.source();
+            axios.get('/nova-api/favs/associatable/user', {
                 params: {
                     search: this.userSearch,
                     first: false,
                     withTrashed: false,
                     viaResource: '',
                     viaResourceId: '',
-                }
+                },
+
+                cancelToken: this.searchUserCancelTokenSource.token
             })
 
             .then( res => {
-                if(this.userSearch === '') return
                 this.availableUsers = res.data.resources;
             })
-            .catch( _ => {
-                Nova.error('Error searching for user')
+            .catch( err => {
+                if (axios.isCancel(err)) return
+                else Nova.error('Error searching for user')
             })
         },
 
