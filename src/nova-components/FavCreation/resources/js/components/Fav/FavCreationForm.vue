@@ -14,8 +14,8 @@
                         :value="form.url.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
-                        :extras="{field: 'url'}"
                         :danger="showUrlErrorMessage"
+                        c-key="url"
                         id="url" 
                         type="text" 
                         placeholder="URL of headline from newsapi.org"
@@ -30,8 +30,8 @@
                         :value="form.publishedAt.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
-                        :extras="{field: 'publishedAt'}"
                         :danger="showPublishedAtErrorMessage"
+                        c-key="publishedAt"
                         id="publishedAt" 
                         type="date" 
                         placeholder="Headline publish date"
@@ -56,8 +56,8 @@
                                 :value="userSearch"
                                 :on-input="handleSearchUser"
                                 :on-blur="setTouched"
-                                :extras="{field: 'user'}"
                                 :danger="showUserErrorMessage"
+                                c-key="user"
                                 id="searchUsers" 
                                 type="text" 
                                 placeholder="Search by username or email"
@@ -264,11 +264,11 @@ export default {
         },
 
         setTouched($e) {
-            this.form[$e.extras.field].touched = true;
+            this.form[$e.key].touched = true;
         },
 
         setValue($e) {
-            this.form[$e.extras.field].value = $e.target.value;
+            this.form[$e.key].value = $e.target.value;
         }
     }
 }

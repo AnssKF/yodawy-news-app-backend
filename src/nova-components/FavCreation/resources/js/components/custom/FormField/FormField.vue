@@ -39,6 +39,9 @@ export default {
         extras: {
             type: Object,
             default: {}
+        },
+        cKey: {
+            type: String,
         }
     },
 
@@ -53,6 +56,7 @@ export default {
             if(!this.onBlur && !(this.onBlur instanceof Function)) return
 
             $event.extras = this.extras
+            $event.key = this.cKey
             this.onBlur($event)
         },
 
@@ -60,6 +64,7 @@ export default {
             if(!this.onInput && !(this.onInput instanceof Function)) return
 
             $event.extras = this.extras
+            $event.key = this.cKey
             this.onInput($event)
         }
     },
