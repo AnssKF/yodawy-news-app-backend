@@ -12,8 +12,9 @@
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
                         :value="form.url.value"
-                        :on-input="setValue('url')"
-                        :on-blur="setTouched('url')"
+                        :on-input="setValue"
+                        :on-blur="setTouched"
+                        :extras="{field: 'url'}"
                         :danger="showUrlErrorMessage"
                         id="url" 
                         type="text" 
@@ -27,8 +28,9 @@
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
                         :value="form.publishedAt.value"
-                        :on-input="setValue('publishedAt')"
-                        :on-blur="setTouched('publishedAt')"
+                        :on-input="setValue"
+                        :on-blur="setTouched"
+                        :extras="{field: 'publishedAt'}"
                         :danger="showPublishedAtErrorMessage"
                         id="publishedAt" 
                         type="date" 
@@ -53,7 +55,8 @@
                             <FormField 
                                 :value="userSearch"
                                 :on-input="handleSearchUser"
-                                :on-blur="setTouched('user')"
+                                :on-blur="setTouched"
+                                :extras="{field: 'user'}"
                                 :danger="showUserErrorMessage"
                                 id="searchUsers" 
                                 type="text" 
@@ -249,16 +252,12 @@ export default {
             }
         },
 
-        setTouched(field) {
-            return () => {
-                this.form[field].touched = true;
-            }
+        setTouched($e) {
+            this.form[$e.extras.field].touched = true;
         },
 
-        setValue(field) {
-            return ($e) => {
-                this.form[field].value = $e.target.value;
-            }
+        setValue($e) {
+            this.form[$e.extras.field].value = $e.target.value;
         }
     }
 }
