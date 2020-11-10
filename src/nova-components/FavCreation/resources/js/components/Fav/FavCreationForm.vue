@@ -43,7 +43,7 @@
 
                     <!-- Selected User -->
                     <div class="selected-user">
-                        <span>User{{ form.user.display ? `: ${form.user.display}`: '' }}</span>
+                        <span>User{{ getSelectedUserName }}</span>
                     </div>
                 
                     <!-- SearchUsers -->
