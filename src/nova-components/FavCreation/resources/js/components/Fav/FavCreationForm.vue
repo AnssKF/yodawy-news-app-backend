@@ -12,7 +12,7 @@
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
                         v-model="form.url.value"
-                        @blur="form.url.touched = true"
+                        :on-blur="setTouched('url')"
                         id="url" 
                         type="text" 
                         placeholder="URL of headline from newsapi.org"
@@ -26,8 +26,8 @@
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
                         v-model="form.publishedAt.value"
-                        @blur="form.publishedAt.touched = true"
                         id="publishedAt" 
+                        :on-blur="setTouched('publishedAt')"
                         type="date" 
                         placeholder="Headline publish date"
                         :danger="invalidPublishedAt && form.publishedAt.touched && form.publishedAt.value !== ''"
@@ -48,47 +48,39 @@
                     <div class="search-users">
                         
                         <!-- SearchField -->
-                        <div>
                             <FormField 
                                 v-model="userSearch"
                                 @input="handleSearchUser"
-                                @blur="form.user.touched = true"
+                                :on-blur="setTouched('user')"
                                 id="searchUsers" 
                                 type="text" 
                                 placeholder="Search by username or email"
                                 :danger="invalidUser && form.user.touched && form.user.value !== ''"
                                 help-text="Please select a valid user."
                             >Select User</FormField>
-                        </div>
                         <!-- ./SearchField -->
 
                         <div class="c-search-options">
                             
                             <!-- Resultoption -->
-                            <div v-if="availableUsers.length">
-                                <div v-for="user in availableUsers" :key="user.value" @click="selectUser(user)"
-                                    class="search-option-wrapper">
-                                    <div class="search-option">
-                                        <div class="search-option__avatar">
-                                            <img :src="user.avatar">
-                                        </div> 
-                                        <div class="search-option__display">
-                                            <div>
-                                                {{ user.display }}
-                                            </div> 
-                                        </div>
+                            <div v-for="user in availableUsers" :key="user.value" @click="selectUser(user)"
+                                class="search-option-wrapper">
+                                <div class="search-option">
+                                    <div class="search-option__avatar">
+                                        <img :src="user.avatar">
+                                    </div> 
+                                    <div class="search-option__display">
+                                        {{ user.display }}
                                     </div>
                                 </div>
                             </div>
 
-                            <div v-if="availableUsers.length === 0 && this.userSearch !== ''">
-                                <div class="search-option-wrapper">
-                                    <div class="search-option">
-                                        <div>
-                                            <div class="search-option__display danger">
-                                                There is no user exist.
-                                            </div> 
-                                        </div>
+                            <div class="search-option-wrapper" v-if="availableUsers.length === 0 && this.userSearch !== ''">
+                                <div class="search-option">
+                                    <div>
+                                        <div class="search-option__display danger">
+                                            There is no user exist.
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -231,6 +223,12 @@ export default {
                     valid: true,
                     display: ''
                 }
+            }
+        },
+
+        setTouched(field) {
+            return () => {
+                this.form[field].touched = true;
             }
         }
     }

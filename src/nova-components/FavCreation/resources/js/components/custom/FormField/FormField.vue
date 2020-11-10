@@ -1,8 +1,8 @@
 <template>
     <div class="c-ff-group">
-        <input v-bind="$attrs" ref="inputfield" @blur="$emit('blur')" @input="$emit('input', $refs.inputfield.value)" :value="value"/>
+        <input v-bind="$attrs" ref="inputfield" v-on="onBlur? {blur: onBlur}: null" @input="$emit('input', $refs.inputfield.value)" :value="value"/>
         <span class="bar"></span>
-        <label :class="danger? 'text-danger': 'text-primary'">
+        <label :class="getLabelClass">
             <slot></slot>
         </label>
 
@@ -20,14 +20,23 @@ export default {
             type: String,
             default: ''
         },
-        'danger': {
+        danger: {
             type: Boolean,
             default: false
         },
-        'help-text': {
+        helpText: {
             type: String,
             default: 'Please insert a valid data.'
         },
-    }
+        onBlur: {
+            type: Function
+        }
+    },
+
+    computed: {
+        getLabelClass() {
+            return this.danger? 'text-danger': 'text-primary';
+        }
+    },
 }
 </script>
