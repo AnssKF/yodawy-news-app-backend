@@ -11,8 +11,6 @@ use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Tools\Dashboard;
 use Laravel\Nova\Tools\ResourceManager;
 
-use Yodawy\FavCreation\FavCreation;
-
 class NovaServiceProvider extends ServiceProvider
 {
     /**
@@ -136,7 +134,6 @@ class NovaServiceProvider extends ServiceProvider
         Nova::tools([
             new Dashboard,
             new ResourceManager,
-            new FavCreation
         ]);
     }
 

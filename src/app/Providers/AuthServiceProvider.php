@@ -6,6 +6,9 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
 
+use App\Models\Favorite;
+use App\Policies\FavPolicy;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -15,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Favorite::class => FavPolicy::class,
     ];
 
     /**
