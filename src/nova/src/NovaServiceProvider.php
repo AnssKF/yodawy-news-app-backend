@@ -136,7 +136,9 @@ class NovaServiceProvider extends ServiceProvider
         Nova::tools([
             new Dashboard,
             new ResourceManager,
-            new FavCreation
+            (new FavCreation)->canSee(function ($request) {
+                return $request->user()->isAn('admin');
+            })
         ]);
     }
 
