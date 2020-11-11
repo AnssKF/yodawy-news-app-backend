@@ -68,7 +68,7 @@
                         <div class="c-search-options">
                             
                             <!-- Resultoption -->
-                            <div v-for="user in availableUsers" :key="user.value" @click="selectUser(user)"
+                            <div v-for="user in getAvailableUsers" :key="user.value" @click="selectUser(user)"
                                 class="search-option-wrapper">
                                 <div class="search-option">
                                     <div class="search-option__avatar">
@@ -115,6 +115,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 // Styles
 import './FavCreationForm.css'
 
@@ -140,13 +141,12 @@ export default {
             },
 
             userSearch: '',
-            availableUsers: [],
-
-            searchUserCancelTokenSource: null,
         }
     },
 
     computed: {
+        ...mapGetters(['getAvailableUsers']),
+
         invalidUrl() {
             const url = this.form.url
             return url.value === '' || !url.value.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)
@@ -183,66 +183,43 @@ export default {
         },
 
         noSearchResults() {
-            return this.availableUsers.length === 0 && this.userSearch !== ''
+            return this.getAvailableUsers.length === 0 && this.userSearch !== ''
         }
     },
 
     methods: {
-        handleSubmit() {
+        ...mapActions(['fetchUsers', 'addFav']),
+
+        async handleSubmit() {
             const url = this.form.url.value;
             const publishedAt = this.form.publishedAt.value;
             const user = this.form.user.value;
-
-            Nova.request().post('/nova-api/favs', {
-                url, publishedAt, user
-            })
-                .then( _ => {
-                    Nova.success('Created')
-                    this.resetForm()
-                })
-                .catch( _ => {
-                    Nova.error('Error')
-                })
+            
+            try{
+                const res = await this.addFav({url, publishedAt, user})
+                Nova.success('Created')
+                this.resetForm()
+            }catch(e){
+                Nova.error('Error')
+            }
             
         },
 
-        handleSearchUser($e) {
+        async handleSearchUser($e) {
             this.userSearch = $e.target.value;
 
-            if(this.searchUserCancelTokenSource) this.searchUserCancelTokenSource.cancel();
-
-            if(this.userSearch === '') return this.availableUsers = []
-
-            // Using axios not Nova.request() so i can cancel old request
-            // Nova.request have an error with axios.isCancel(response)
-
-            this.searchUserCancelTokenSource = axios.CancelToken.source();
-            axios.get('/nova-api/favs/associatable/user', {
-                params: {
-                    search: this.userSearch,
-                    first: false,
-                    withTrashed: false,
-                    viaResource: '',
-                    viaResourceId: '',
-                },
-
-                cancelToken: this.searchUserCancelTokenSource.token
-            })
-
-            .then( res => {
-                this.availableUsers = res.data.resources;
-            })
-            .catch( err => {
-                if (axios.isCancel(err)) return
-                else Nova.error('Error searching for user')
-            })
+            try{
+                await this.fetchUsers(this.userSearch)
+            }catch(e) {
+                Nova.error('Error searching for user')
+            }
         },
 
         selectUser(availableUser) {
             this.form.user.value = availableUser.value;
             this.form.user.display = availableUser.display;
-            this.availableUsers = [];
             this.userSearch = '';
+            this.fetchUsers('')
         },
 
         resetForm(){
