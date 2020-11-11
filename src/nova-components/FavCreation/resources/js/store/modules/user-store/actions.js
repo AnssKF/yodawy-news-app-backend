@@ -1,5 +1,7 @@
+import { SET_AVAILABLE_USERS, UPDATE_SEARCH_CANCEL_TOKEN_SOURCE } from './mutations'
 
-export const fetchUsers = async ({ commit, state }, searchResult) => {
+
+const fetchUsers = async ({ commit, state }, searchResult) => {
     let searchCancelTokenSource = state.searchCancelTokenSource;
 
     // Cancel Old Request
@@ -7,13 +9,13 @@ export const fetchUsers = async ({ commit, state }, searchResult) => {
 
     // If search result is empty no need to send new request
     if(searchResult === '') {
-        commit('setAvailableUsers', [])
+        commit(SET_AVAILABLE_USERS, [])
         return
     }
 
     // Generate New Cancel Token and save it to state
     searchCancelTokenSource = axios.CancelToken.source()
-    commit('updateSearchCancelTokenSource', searchCancelTokenSource)
+    commit(UPDATE_SEARCH_CANCEL_TOKEN_SOURCE, searchCancelTokenSource)
 
     try {
         const res = await axios.get('/nova-api/favs/associatable/user', {
@@ -27,10 +29,14 @@ export const fetchUsers = async ({ commit, state }, searchResult) => {
             cancelToken: searchCancelTokenSource.token
         })
 
-        commit('setAvailableUsers', res.data.resources)
+        commit(SET_AVAILABLE_USERS, res.data.resources)
         return Promise.resolve()
     }catch(err){
         if (axios.isCancel(err)) Promise.resolve()
         else Promise.reject()
     }
+}
+
+export default {
+    fetchUsers
 }
