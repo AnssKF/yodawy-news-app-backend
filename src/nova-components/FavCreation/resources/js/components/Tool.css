@@ -1,0 +1,30 @@
+.fav-creation-tool {
+    --mp-0: 0;
+    --mp-1: .25rem;
+    --mp-2: .5rem;
+    --mp-3: .75rem;
+    --mp-4: 1rem;
+    --mp-5: 1.25rem;
+    --mp-6: 1.5rem;
+    --mp-7: 1.75rem;
+    --mp-8: 2rem;
+
+    --white: #fff;
+    --black: #22292f;
+    --danger: #e74444;
+    --primary: #4099de;
+}
+
+.fav-creation-tool .help-text {
+    font-style: italic;
+    margin-top: var(--mp-2);
+    color: var(--danger);
+}
+
+.fav-creation-tool .text-primary {
+    color: var(--primary);
+}
+
+.fav-creation-tool .text-danger {
+    color: var(--danger);
+}

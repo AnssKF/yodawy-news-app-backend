@@ -1,0 +1,67 @@
+
+.c-ff-group {
+    position: relative;
+    margin: var(--mp-4) var(--mp-0) var(--mp-2);
+}
+
+.c-ff-group input {
+    font-size: 1rem;
+    padding: 5px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #757575;
+}
+
+.c-ff-group input:focus {
+    outline: none;
+}
+
+.c-ff-group label {
+    font-size: 1rem;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 0px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.c-ff-group input:focus~label,
+.c-ff-group input:valid~label {
+    top: -15px;
+    font-size: 14px;
+}
+
+.c-ff-group .bar {
+    position: relative;
+    display: block;
+}
+
+.c-ff-group .bar:before,
+.c-ff-group .bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 0px;
+    position: absolute;
+    background: var(--primary);
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.c-ff-group .bar:before {
+    left: 50%;
+}
+
+.c-ff-group .bar:after {
+    right: 50%;
+}
+
+.c-ff-group input:focus~.bar:before,
+.c-ff-group input:focus~.bar:after {
+    width: 50%;
+}
