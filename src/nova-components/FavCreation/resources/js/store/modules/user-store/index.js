@@ -1,24 +1,7 @@
-import { fetchUsers } from './actions'
-
-const state = {
-    availableUsers: [],
-
-    searchCancelTokenSource: null,
-}
-
-const getters = {
-    getAvailableUsers: store => store.availableUsers, 
-}
-
-const actions = {
-    fetchUsers
-}
-
-const mutations = {
-    updateSearchCancelTokenSource: (store, source) => store.searchCancelTokenSource = source,
-
-    setAvailableUsers: (store, availableUsers) => store.availableUsers = availableUsers
-}
+import state from './state'
+import getters from './getters'
+import actions from './actions'
+import mutations from './mutations'
 
 export default {
     state, getters, actions, mutations
