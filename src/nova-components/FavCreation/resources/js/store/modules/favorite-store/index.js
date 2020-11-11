@@ -1,17 +1,7 @@
-import { addFav } from './actions'
-
-const state = {
-}
-
-const getters = {
-}
-
-const actions = {
-    addFav
-}
-
-const mutations = {
-}
+import actions from './actions'
+import state from './state'
+import getters from './getters'
+import mutations from './mutations'
 
 export default {
     state, getters, actions, mutations
