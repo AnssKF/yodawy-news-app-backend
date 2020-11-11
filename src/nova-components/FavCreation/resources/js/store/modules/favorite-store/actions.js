@@ -1,5 +1,5 @@
 
-export const addFav = async ({ commit }, fav) => {
+const addFav = async ({ commit }, fav) => {
     const {url, publishedAt, user} = fav
 
     try{
@@ -10,4 +10,8 @@ export const addFav = async ({ commit }, fav) => {
     }catch(e){
         return Promise.reject(e)
     }
+}
+
+export default {
+    addFav
 }
