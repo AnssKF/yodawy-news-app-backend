@@ -17,7 +17,8 @@
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "silber/bouncer": "v1.0.0-rc.9",
-        "yodawy/fav-creation": "*"
+        "yodawy/fav-creation": "*",
+        "yodawy/component-ui": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -70,6 +71,10 @@
         {
             "type": "path",
             "url": "./nova-components/FavCreation"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/ComponentUi"
         }
     ]
 }
