@@ -1,4 +1,4 @@
 
 export default {
-    getAvailableUsers: store => store.availableUsers, 
+    getAvailableUsers: state => state.availableUsers, 
 }
