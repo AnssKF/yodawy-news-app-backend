@@ -17,11 +17,7 @@ const updateFormField = (state, { field, attr, value }) => {
 
 export const RESET_FAV_FORM = 'RESET_FAV_FORM';
 const resetFavForm = (state) => {
-    state.favForm = {
-        url: { value: '', touched: false },
-        publishedAt: { value: '', touched: false },
-        user: { value: '', display: '', touched: false, userSearch: '' }
-    }
+    state.favForm = FAV_FORM_INITIAL()
 }
 
 export default {
