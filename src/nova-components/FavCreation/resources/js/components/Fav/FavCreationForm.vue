@@ -11,7 +11,7 @@
                 <!-- URL -->
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
-                        :value="form.url.value"
+                        :value="getFavForm.url.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
                         :danger="showUrlErrorMessage"
@@ -27,7 +27,7 @@
                 <!-- PublishedAt -->
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
-                        :value="form.publishedAt.value"
+                        :value="getFavForm.publishedAt.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
                         :danger="showPublishedAtErrorMessage"
@@ -53,7 +53,7 @@
                         
                         <!-- SearchField -->
                             <FormField 
-                                :value="userSearch"
+                                :value="getFavForm.user.userSearch"
                                 :on-input="handleSearchUser"
                                 :on-blur="setTouched"
                                 :danger="showUserErrorMessage"
@@ -100,6 +100,12 @@
 
                 <div class="c-form-footer">
                     <button 
+                        @click="resetFavForm"
+                        type="button" 
+                        class="c-btn c-btn-shadow-effect btn-clear">
+                        X
+                    </button>
+                    <button 
                         :disabled="submitDisabled"
                         type="submit" 
                         class="c-btn c-btn-shadow-effect">
@@ -122,60 +128,39 @@ import './FavCreationForm.css'
 export default {
     name: 'FavCreationForm',
 
-    data(){
-        return {
-            form: {
-                url: {
-                    value: '',
-                    touched: false
-                },
-                publishedAt: {
-                    value: '',
-                    touched: false
-                },
-                user: {
-                    value: '',
-                    display: '',
-                    touched: false
-                }
-            },
-
-            userSearch: '',
-        }
-    },
-
     computed: {
-        ...mapGetters(['getAvailableUsers']),
+        ...mapGetters('UserStore', ['getAvailableUsers']),
+        ...mapGetters('FavStore', ['getFavForm']),
 
         invalidUrl() {
-            const url = this.form.url
+            const url = this.getFavForm.url
             return url.value === '' || !url.value.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)
         },
 
         invalidPublishedAt() {
-            const publishedAt = this.form.publishedAt
+            const publishedAt = this.getFavForm.publishedAt
             return publishedAt.value === '' || !publishedAt.value.match(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
         },
 
         invalidUser() {
-            const user = this.form.user
+            const user = this.getFavForm.user
             return user.value === ''
         },
 
         showUrlErrorMessage() {
-            return this.invalidUrl && this.form.url.touched && this.form.url.value !== ''
+            return this.invalidUrl && this.getFavForm.url.touched && this.getFavForm.url.value !== ''
         },
 
         showPublishedAtErrorMessage() {
-            return this.invalidPublishedAt && this.form.publishedAt.touched && this.form.publishedAt.value !== ''
+            return this.invalidPublishedAt && this.getFavForm.publishedAt.touched && this.getFavForm.publishedAt.value !== ''
         },
 
         showUserErrorMessage() {
-            return this.invalidUser && this.form.user.touched && this.form.user.value !== ''
+            return this.invalidUser && this.getFavForm.user.touched && this.getFavForm.user.value !== ''
         },
 
         getSelectedUserName() {
-            return this.form.user.display ? `: ${this.form.user.display}`: ''
+            return this.getFavForm.user.display ? `: ${this.getFavForm.user.display}`: ''
         },
         
         submitDisabled() {
@@ -183,22 +168,23 @@ export default {
         },
 
         noSearchResults() {
-            return this.getAvailableUsers.length === 0 && this.userSearch !== ''
+            return this.getAvailableUsers.length === 0 && this.getFavForm.user.userSearch !== ''
         }
     },
 
     methods: {
-        ...mapActions(['fetchUsers', 'addFav']),
+        ...mapActions('UserStore', ['fetchUsers']),
+        ...mapActions('FavStore', ['addFav', 'updateFavFormField', 'resetFavForm']),
 
         async handleSubmit() {
-            const url = this.form.url.value;
-            const publishedAt = this.form.publishedAt.value;
-            const user = this.form.user.value;
-            
+            const url = this.getFavForm.url.value;
+            const publishedAt = this.getFavForm.publishedAt.value;
+            const user = this.getFavForm.user.value;
+
             try{
                 const res = await this.addFav({url, publishedAt, user})
                 Nova.success('Created')
-                this.resetForm()
+                this.resetFavForm()
             }catch(e){
                 Nova.error('Error')
             }
@@ -206,46 +192,28 @@ export default {
         },
 
         async handleSearchUser($e) {
-            this.userSearch = $e.target.value;
+            this.updateFavFormField({ field: 'user', attr: 'userSearch', value: $e.target.value })
 
             try{
-                await this.fetchUsers(this.userSearch)
+                await this.fetchUsers(this.getFavForm.user.userSearch)
             }catch(e) {
                 Nova.error('Error searching for user')
             }
         },
 
         selectUser(availableUser) {
-            this.form.user.value = availableUser.value;
-            this.form.user.display = availableUser.display;
-            this.userSearch = '';
+            this.updateFavFormField({ field: 'user', attr: 'value', value: availableUser.value })
+            this.updateFavFormField({ field: 'user', attr: 'display', value: availableUser.display })
+            this.updateFavFormField({ field: 'user', attr: 'userSearch', value: '' })
             this.fetchUsers('')
         },
 
-        resetForm(){
-            this.form = {
-                url: {
-                    value: '',
-                    valid: true
-                },
-                publishedAt: {
-                    value: '',
-                    valid: true
-                },
-                user: {
-                    value: '',
-                    valid: true,
-                    display: ''
-                }
-            }
-        },
-
         setTouched($e) {
-            this.form[$e.key].touched = true;
+            this.updateFavFormField({ field: $e.key, attr: 'touched', value: true })
         },
 
         setValue($e) {
-            this.form[$e.key].value = $e.target.value;
+            this.updateFavFormField({ field: $e.key, attr: 'value', value: $e.target.value })
         }
     }
 }
