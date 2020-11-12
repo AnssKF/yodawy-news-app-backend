@@ -1,0 +1,33 @@
+
+.c-btn {
+    color: var(--white);
+    padding: 1em;
+    border-radius: 3px;
+}
+
+.c-btn.btn-primary {
+    background-color: var(--primary);
+}
+
+.c-btn.btn-danger {
+    background-color: var(--danger);
+}
+
+.c-btn:disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    color: var(--gray);
+}
+
+.c-btn-shadow-effect {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+    transition: .2s ease-in-out all;
+}
+
+.c-btn-shadow-effect:hover {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.4);
+}
+
+.c-btn-shadow-effect:disabled:hover {
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.2);
+}
