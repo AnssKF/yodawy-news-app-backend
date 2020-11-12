@@ -40,6 +40,24 @@
                 </div>
                 <!-- ./PublishedAt -->
 
+                <!-- ----------------------- -->
+                <!-- Author -->
+                <div class="c-form-field-wrapper c-border-bottom">
+                    <FormField 
+                        :value="getAuthorField.value"
+                        :on-input="validateAndSetAuthor"
+                        :on-blur="setTouched"
+                        :danger="showAuthorErrorMessage"
+                        c-key="author"
+                        id="getAuthorField" 
+                        type="text" 
+                        placeholder="Name of Author"
+                        help-text="Author accepts only english litters."
+                    >Author</FormField>
+                </div>
+                <!-- ./Author -->
+                <!-- ----------------------- -->
+
                 <!-- USER -->
                 <div class="c-form-field-wrapper c-border-bottom">
 
@@ -128,9 +146,15 @@ import './FavCreationForm.css'
 export default {
     name: 'FavCreationForm',
 
+    data(){
+        return {
+            invalidAuthor: false
+        }
+    },
+
     computed: {
         ...mapGetters('UserStore', ['getAvailableUsers']),
-        ...mapGetters('FavStore', ['getUserSearch', 'getUrlField', 'getPublishedAtField', 'getUserField']),
+        ...mapGetters('FavStore', ['getUserSearch', 'getUrlField', 'getPublishedAtField', 'getUserField', 'getAuthorField']),
 
         invalidUrl() {
             const url = this.getUrlField
@@ -157,6 +181,10 @@ export default {
 
         showUserErrorMessage() {
             return this.invalidUser && this.getUserField.touched && this.getUserField.value !== ''
+        },
+
+        showAuthorErrorMessage() {
+            return this.invalidAuthor || this.getAuthorField.touched && this.getAuthorField.value !== ''
         },
 
         getSelectedUserName() {
@@ -206,6 +234,19 @@ export default {
             this.updateFavFormField({ field: 'user', attr: 'display', value: availableUser.display })
             this.updateFavFormField({ field: 'user', attr: 'userSearch', value: '' })
             this.fetchUsers('')
+        },
+
+        validateAndSetAuthor($e){
+            const value = $e.target.value
+
+            if(value !== '' && !(/^[a-zA-Z ]+$/).test(value)){
+                $e.target.value = value.match(/([a-zA-Z ]+)/g).join(' ')
+                this.invalidAuthor = true;
+            }else{
+                this.invalidAuthor = false
+            }
+
+            this.setValue($e)
         },
 
         setTouched($e) {
