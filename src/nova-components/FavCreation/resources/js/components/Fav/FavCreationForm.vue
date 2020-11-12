@@ -184,7 +184,7 @@ export default {
         },
 
         showAuthorErrorMessage() {
-            return this.invalidAuthor || this.getAuthorField.touched && this.getAuthorField.value !== ''
+            return !this.getAuthorField.value === '' || this.invalidAuthor
         },
 
         getSelectedUserName() {
