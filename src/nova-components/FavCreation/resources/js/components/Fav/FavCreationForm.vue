@@ -53,7 +53,7 @@
                         
                         <!-- SearchField -->
                             <FormField 
-                                :value="getFavForm.user.userSearch"
+                                :value="getUserSearch"
                                 :on-input="handleSearchUser"
                                 :on-blur="setTouched"
                                 :danger="showUserErrorMessage"
@@ -130,7 +130,7 @@ export default {
 
     computed: {
         ...mapGetters('UserStore', ['getAvailableUsers']),
-        ...mapGetters('FavStore', ['getFavForm']),
+        ...mapGetters('FavStore', ['getFavForm', 'getUserSearch']),
 
         invalidUrl() {
             const url = this.getFavForm.url
@@ -168,7 +168,7 @@ export default {
         },
 
         noSearchResults() {
-            return this.getAvailableUsers.length === 0 && this.getFavForm.user.userSearch !== ''
+            return this.getAvailableUsers.length === 0 && this.getUserSearch !== ''
         }
     },
 
@@ -195,7 +195,7 @@ export default {
             this.updateFavFormField({ field: 'user', attr: 'userSearch', value: $e.target.value })
 
             try{
-                await this.fetchUsers(this.getFavForm.user.userSearch)
+                await this.fetchUsers(this.getUserSearch)
             }catch(e) {
                 Nova.error('Error searching for user')
             }
