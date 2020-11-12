@@ -8,6 +8,7 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 use Yodawy\FavCreation\FavCreation;
+use Yodawy\ComponentUi\ComponentUi;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
