@@ -18,9 +18,9 @@ export default {
         styleType: {
             type: String,
             default: 'primary',
-            // validator: function (value) {
-            //     return ['primary', 'danger'].indexOf(value) !== -1
-            // }
+            validator: function (value) {
+                return ['primary', 'danger'].indexOf(value) !== -1
+            }
         },
         onClick: {
             type: Function,
