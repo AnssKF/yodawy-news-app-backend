@@ -1,6 +1,6 @@
 {
     "name": "yodawy/component-ui",
-    "description": "A Laravel Nova tool.",
+    "description": "A Laravel Nova resource tool.",
     "keywords": [
         "laravel",
         "nova"

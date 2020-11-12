@@ -2,29 +2,27 @@
 
 namespace Yodawy\ComponentUi;
 
-use Laravel\Nova\Nova;
-use Laravel\Nova\Tool;
+use Laravel\Nova\ResourceTool;
 
-class ComponentUi extends Tool
+class ComponentUi extends ResourceTool
 {
     /**
-     * Perform any tasks that need to happen when the tool is booted.
+     * Get the displayable name of the resource tool.
      *
-     * @return void
+     * @return string
      */
-    public function boot()
+    public function name()
     {
-        Nova::script('component-ui', __DIR__.'/../dist/js/tool.js');
-        Nova::style('component-ui', __DIR__.'/../dist/css/tool.css');
+        return 'Component Ui';
     }
 
     /**
-     * Build the view that renders the navigation links for the tool.
+     * Get the component name for the resource tool.
      *
-     * @return \Illuminate\View\View
+     * @return string
      */
-    public function renderNavigation()
+    public function component()
     {
-        return view('component-ui::navigation');
+        return 'component-ui';
     }
 }
