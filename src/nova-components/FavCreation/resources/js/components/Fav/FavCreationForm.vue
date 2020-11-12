@@ -114,18 +114,15 @@
                 <!-- ./USER -->
 
                 <div class="c-form-footer">
-                    <button 
-                        @click="resetFavForm"
-                        type="button" 
-                        class="c-btn c-btn-shadow-effect btn-clear">
-                        X
-                    </button>
-                    <button 
+                    <c-btn
+                        :on-click="resetFavForm"
+                        style-type="danger"
+                        type="button"
+                        class="clear-btn"> X </c-btn>
+                    
+                    <c-btn
                         :disabled="submitDisabled"
-                        type="submit" 
-                        class="c-btn c-btn-shadow-effect">
-                        Create Fav
-                    </button>
+                        type="submit">Create Fav</c-btn>
                 </div>
             </c-card>
 
