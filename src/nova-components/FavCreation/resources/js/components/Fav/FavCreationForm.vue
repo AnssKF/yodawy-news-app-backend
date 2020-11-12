@@ -11,7 +11,7 @@
                 <!-- URL -->
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
-                        :value="getFavForm.url.value"
+                        :value="getUrlField.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
                         :danger="showUrlErrorMessage"
@@ -27,7 +27,7 @@
                 <!-- PublishedAt -->
                 <div class="c-form-field-wrapper c-border-bottom">
                     <FormField 
-                        :value="getFavForm.publishedAt.value"
+                        :value="getPublishedAtField.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
                         :danger="showPublishedAtErrorMessage"
@@ -130,37 +130,37 @@ export default {
 
     computed: {
         ...mapGetters('UserStore', ['getAvailableUsers']),
-        ...mapGetters('FavStore', ['getFavForm', 'getUserSearch']),
+        ...mapGetters('FavStore', ['getUserSearch', 'getUrlField', 'getPublishedAtField', 'getUserField']),
 
         invalidUrl() {
-            const url = this.getFavForm.url
+            const url = this.getUrlField
             return url.value === '' || !url.value.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)
         },
 
         invalidPublishedAt() {
-            const publishedAt = this.getFavForm.publishedAt
+            const publishedAt = this.getPublishedAtField
             return publishedAt.value === '' || !publishedAt.value.match(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
         },
 
         invalidUser() {
-            const user = this.getFavForm.user
+            const user = this.getUserField
             return user.value === ''
         },
 
         showUrlErrorMessage() {
-            return this.invalidUrl && this.getFavForm.url.touched && this.getFavForm.url.value !== ''
+            return this.invalidUrl && this.getUrlField.touched && this.getUrlField.value !== ''
         },
 
         showPublishedAtErrorMessage() {
-            return this.invalidPublishedAt && this.getFavForm.publishedAt.touched && this.getFavForm.publishedAt.value !== ''
+            return this.invalidPublishedAt && this.getPublishedAtField.touched && this.getPublishedAtField.value !== ''
         },
 
         showUserErrorMessage() {
-            return this.invalidUser && this.getFavForm.user.touched && this.getFavForm.user.value !== ''
+            return this.invalidUser && this.getUserField.touched && this.getUserField.value !== ''
         },
 
         getSelectedUserName() {
-            return this.getFavForm.user.display ? `: ${this.getFavForm.user.display}`: ''
+            return this.getUserField.display ? `: ${this.getUserField.display}`: ''
         },
         
         submitDisabled() {
@@ -177,9 +177,9 @@ export default {
         ...mapActions('FavStore', ['addFav', 'updateFavFormField', 'resetFavForm']),
 
         async handleSubmit() {
-            const url = this.getFavForm.url.value;
-            const publishedAt = this.getFavForm.publishedAt.value;
-            const user = this.getFavForm.user.value;
+            const url = this.getUrlField.value;
+            const publishedAt = this.getPublishedAtField.value;
+            const user = this.getUserField.value;
 
             try{
                 const res = await this.addFav({url, publishedAt, user})
