@@ -2,8 +2,6 @@ import FavCreationForm from './components/Fav/FavCreationForm.vue';
 
 import { registerStoreModules } from './store'
 
-import { registerStoreModules } from './store'
-
 Nova.booting((Vue, router, store) => {
   registerComponents(Vue);
   registerStoreModules(store);
