@@ -1,8 +1,4 @@
 
-.c-fav-creation-form .c-border-bottom {
-    border-bottom: 1px solid #eaeaea;
-}
-
 .c-fav-creation-form .c-form-field-wrapper {
     padding: var(--mp-6) var(--mp-8);
 }
@@ -60,34 +56,6 @@
     margin: var(--mp-6);
 }
 
-.c-fav-creation-form .c-btn {
-    background-color: var(--primary);
-    color: var(--white);
-    padding: 1em;
-    border-radius: 3px;
-}
-
-.c-fav-creation-form .c-btn.btn-clear {
+.clear-btn {
     margin-right: var(--mp-2);
-    background-color: var(--danger-dark);
-    color: var(--white);
-}
-
-.c-fav-creation-form .c-btn:disabled {
-    cursor: not-allowed;
-    background-color: transparent;
-    color: var(--gray);
-}
-
-.c-fav-creation-form .c-btn-shadow-effect {
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-    transition: .2s ease-in-out all;
-}
-
-.c-fav-creation-form .c-btn-shadow-effect:hover {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,.4);
-}
-
-.c-fav-creation-form .c-btn-shadow-effect:disabled:hover {
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.2);
 }
