@@ -240,7 +240,7 @@ export default {
             const value = $e.target.value
 
             if(value !== '' && !(/^[a-zA-Z ]+$/).test(value)){
-                $e.target.value = value.match(/([a-zA-Z ]+)/g).join(' ')
+                $e.target.value = (value.match(/([a-zA-Z ]+)/g) || []).join(' ')
                 this.invalidAuthor = true;
             }else{
                 this.invalidAuthor = false
