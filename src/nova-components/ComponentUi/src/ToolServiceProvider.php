@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
-use Yodawy\ComponentUi\Http\Middleware\Authorize;
 
 class ToolServiceProvider extends ServiceProvider
 {
@@ -17,14 +16,13 @@ class ToolServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'component-ui');
-
         $this->app->booted(function () {
             $this->routes();
         });
 
         Nova::serving(function (ServingNova $event) {
-            //
+            Nova::script('component-ui', __DIR__.'/../dist/js/tool.js');
+            Nova::style('component-ui', __DIR__.'/../dist/css/tool.css');
         });
     }
 
@@ -39,7 +37,7 @@ class ToolServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middleware(['nova', Authorize::class])
+        Route::middleware(['nova'])
                 ->prefix('nova-vendor/component-ui')
                 ->group(__DIR__.'/../routes/api.php');
     }

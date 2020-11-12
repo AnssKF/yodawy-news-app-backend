@@ -6594,7 +6594,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/ComponentUi",
-                "reference": "f2aecbb06c8a5988d4547f4af28c0de9c7d08475"
+                "reference": "e9d51106121dd48e4a738073e5ba34b765cf2062"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -6615,7 +6615,7 @@
             "license": [
                 "MIT"
             ],
-            "description": "A Laravel Nova tool.",
+            "description": "A Laravel Nova resource tool.",
             "keywords": [
                 "laravel",
                 "nova"

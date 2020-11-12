@@ -8,7 +8,6 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 use Yodawy\FavCreation\FavCreation;
-use Yodawy\ComponentUi\ComponentUi;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -83,9 +82,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new FavCreation)->canSee(function ($request) {
                 return $request->user()->isAn('admin');
-            }),
-            (new ComponentUi)
-
+            })
         ];
     }
 
