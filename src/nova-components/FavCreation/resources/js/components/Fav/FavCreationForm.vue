@@ -2,15 +2,12 @@
     <div class="c-fav-creation-form">
 
         <form @submit.prevent="handleSubmit">
-            <div class="c-card">
 
-                <div class="c-card__title-wrapper c-card__title__border-left">
-                    <h2 class="c-card__title">Create Fav</h2>
-                </div>
+            <c-card title="Create Fav">
 
                 <!-- URL -->
                 <div class="c-form-field-wrapper c-border-bottom">
-                    <FormField 
+                    <form-field 
                         :value="getUrlField.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
@@ -20,13 +17,13 @@
                         type="text" 
                         placeholder="URL of headline from newsapi.org"
                         help-text="Please enter a valid URL."
-                    >URL</FormField>
+                    >URL</form-field>
                 </div>
                 <!-- ./URL -->
 
                 <!-- PublishedAt -->
                 <div class="c-form-field-wrapper c-border-bottom">
-                    <FormField 
+                    <form-field 
                         :value="getPublishedAtField.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
@@ -36,14 +33,14 @@
                         type="date" 
                         placeholder="Headline publish date"
                         help-text="Please enter a valid date yyyy-mm-dd."
-                    >Published At</FormField>
+                    >Published At</form-field>
                 </div>
                 <!-- ./PublishedAt -->
 
                 <!-- ----------------------- -->
                 <!-- Author -->
                 <div class="c-form-field-wrapper c-border-bottom">
-                    <FormField 
+                    <form-field 
                         :value="getAuthorField.value"
                         :on-input="validateAndSetAuthor"
                         :on-blur="setTouched"
@@ -53,7 +50,7 @@
                         type="text" 
                         placeholder="Name of Author"
                         help-text="Author accepts only english litters."
-                    >Author</FormField>
+                    >Author</form-field>
                 </div>
                 <!-- ./Author -->
                 <!-- ----------------------- -->
@@ -70,7 +67,7 @@
                     <div class="search-users">
                         
                         <!-- SearchField -->
-                            <FormField 
+                            <form-field 
                                 :value="getUserSearch"
                                 :on-input="handleSearchUser"
                                 :on-blur="setTouched"
@@ -80,7 +77,7 @@
                                 type="text" 
                                 placeholder="Search by username or email"
                                 help-text="Please select a valid user."
-                            >Select User</FormField>
+                            >Select User</form-field>
                         <!-- ./SearchField -->
 
                         <div class="c-search-options">
@@ -130,9 +127,7 @@
                         Create Fav
                     </button>
                 </div>
-
-            </div> <!-- ./card -->
-
+            </c-card>
 
         </form>
     </div>

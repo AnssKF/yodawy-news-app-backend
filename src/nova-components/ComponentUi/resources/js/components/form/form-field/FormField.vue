@@ -6,7 +6,7 @@
             <slot></slot>
         </label>
 
-        <span v-if="danger" class="help-text">{{ helpText }}</span>
+        <span v-if="danger" class="help-text text-danger">{{ helpText }}</span>
     </div>
 </template>
 
@@ -14,7 +14,7 @@
 import './FormField.css';
 
 export default {
-    name: 'FormField',
+    name: 'form-field',
     props: {
         value: {
             type: String,

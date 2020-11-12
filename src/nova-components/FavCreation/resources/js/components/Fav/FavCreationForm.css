@@ -1,24 +1,3 @@
-.c-fav-creation-form .c-card {
-    background: var(--white);
-    border-radius: 2px;
-    width: 100%;
-    padding: var(--mp-2) 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-
-.c-fav-creation-form .c-card .c-card__title-wrapper {
-    margin-top: var(--mp-6);
-    
-    padding: var(--mp-3) 0;
-}
-
-.c-fav-creation-form .c-card .c-card__title-wrapper .c-card__title {
-    margin: var(--mp-3) var(--mp-8);
-}
-
-.c-fav-creation-form .c-card .c-card__title__border-left {
-    border-left: 3px solid var(--primary);
-}
 
 .c-fav-creation-form .c-border-bottom {
     border-bottom: 1px solid #eaeaea;
