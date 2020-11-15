@@ -146,22 +146,7 @@ export default {
 
     computed: {
         ...mapGetters('UserStore', ['getAvailableUsers']),
-        ...mapGetters('FavStore', ['getUserSearch', 'getUrlField', 'getPublishedAtField', 'getUserField', 'getAuthorField']),
-
-        invalidUrl() {
-            const url = this.getUrlField
-            return url.value === '' || !url.value.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)
-        },
-
-        invalidPublishedAt() {
-            const publishedAt = this.getPublishedAtField
-            return publishedAt.value === '' || !publishedAt.value.match(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
-        },
-
-        invalidUser() {
-            const user = this.getUserField
-            return user.value === ''
-        },
+        ...mapGetters('FavStore', ['getUserSearch', 'getUrlField', 'getPublishedAtField', 'getUserField', 'getAuthorField', 'invalidUrl', 'invalidPublishedAt', 'invalidUser']),
 
         showUrlErrorMessage() {
             return this.invalidUrl && this.getUrlField.touched && this.getUrlField.value !== ''
