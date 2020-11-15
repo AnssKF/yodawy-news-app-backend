@@ -29,6 +29,8 @@ const fetchUsers = async ({ commit, state }, searchResult) => {
             cancelToken: searchCancelTokenSource.token
         })
 
+        if(!res.data.resources) return Promise.reject()
+        
         commit(SET_AVAILABLE_USERS, res.data.resources)
         return Promise.resolve()
     }catch(err){
