@@ -178,6 +178,8 @@ return [
         App\Providers\NovaServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Venturecraft\Revisionable\RevisionableServiceProvider::class
+
     ],
 
     /*
