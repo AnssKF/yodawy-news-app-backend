@@ -1,9 +1,13 @@
 import { UPDATE_FAV_FORM_FIELD, RESET_FAV_FORM } from './mutations'
 
-const addFav = async ({ commit, state }) => {
+const addFav = async ({ commit, state, getters }) => {
+    const { invalidUrl, invalidPublishedAt, invalidUser } = getters
+
     const url           = state.favForm.user.value;
     const publishedAt   = state.favForm.publishedAt.value;
     const user          = state.favForm.user.value;
+
+    if(invalidUrl || invalidPublishedAt || invalidUser) return Promise.reject('Invalid Parameters')
 
     try{
         const res = await Nova.request().post('/nova-api/favs', {
@@ -29,7 +33,8 @@ const validateAndSetAuthorValue = ({ commit, dispatch }, $e) => {
     let invalidAuthor = false;
 
     if(value !== '' && !(/^[a-zA-Z ]+$/).test(value)){
-        $e.target.value = (value.match(/([a-zA-Z ]+)/g) || []).join(' ')
+        // $e.target.value = (value.match(/([a-zA-Z ]+)/g) || []).join(' ')
+        $e.target.value = value.replace(/([^a-zA-Z ])+/, '')
         invalidAuthor = true;
     }else{
         invalidAuthor = false;
