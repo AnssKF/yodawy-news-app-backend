@@ -17,6 +17,7 @@
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "silber/bouncer": "v1.0.0-rc.9",
+        "venturecraft/revisionable": "1.*",
         "yodawy/fav-creation": "*",
         "yodawy/component-ui": "*"
     },
