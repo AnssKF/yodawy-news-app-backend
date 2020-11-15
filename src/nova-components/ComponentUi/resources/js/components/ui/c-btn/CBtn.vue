@@ -2,7 +2,6 @@
     <button 
         @click="handleOnClick"
         v-bind="$attrs"
-        class="c-btn"
         :class="getBtnStyle">
         
         <slot>Submit</slot>
@@ -29,7 +28,11 @@ export default {
     },
     computed: {
         getBtnStyle() {
-            return this.styleType === 'danger'? 'btn-danger': 'btn-primary';
+            return {
+                'c-btn': true,
+                'btn-danger': this.styleType === 'danger',
+                'btn-primary': this.styleType === 'primary' 
+            }
         }
     },
     methods: {
