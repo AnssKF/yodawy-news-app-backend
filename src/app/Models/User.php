@@ -9,12 +9,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use Silber\Bouncer\Database\HasRolesAndAbilities;
+use \Venturecraft\Revisionable\RevisionableTrait;
 
 use App\Models\Favorite;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRolesAndAbilities;
+    use HasApiTokens, HasFactory, Notifiable, HasRolesAndAbilities, RevisionableTrait;
+
+    protected $revisionEnabled = true;
+    protected $revisionCreationsEnabled = true;
 
     /**
      * The attributes that are mass assignable.
