@@ -37,14 +37,13 @@
                 </div>
                 <!-- ./PublishedAt -->
 
-                <!-- ----------------------- -->
                 <!-- Author -->
                 <div class="c-form-field-wrapper c-border-bottom">
                     <form-field 
                         :value="getAuthorField.value"
-                        :on-input="validateAndSetAuthor"
+                        :on-input="validateAndSetAuthorValue"
                         :on-blur="setTouched"
-                        :danger="showAuthorErrorMessage"
+                        :danger="invalidAuthor"
                         c-key="author"
                         id="getAuthorField" 
                         type="text" 
@@ -53,7 +52,6 @@
                     >Author</form-field>
                 </div>
                 <!-- ./Author -->
-                <!-- ----------------------- -->
 
                 <!-- USER -->
                 <div class="c-form-field-wrapper c-border-bottom">
@@ -138,15 +136,9 @@ import './FavCreationForm.css'
 export default {
     name: 'FavCreationForm',
 
-    data(){
-        return {
-            invalidAuthor: false
-        }
-    },
-
     computed: {
         ...mapGetters('UserStore', ['getAvailableUsers']),
-        ...mapGetters('FavStore', ['getUserSearch', 'getUrlField', 'getPublishedAtField', 'getUserField', 'getAuthorField', 'invalidUrl', 'invalidPublishedAt', 'invalidUser']),
+        ...mapGetters('FavStore', ['getUserSearch', 'getUrlField', 'getPublishedAtField', 'getUserField', 'getAuthorField', 'invalidUrl', 'invalidPublishedAt', 'invalidUser', 'invalidAuthor']),
 
         showUrlErrorMessage() {
             return this.invalidUrl && this.getUrlField.touched && this.getUrlField.value !== ''
@@ -158,10 +150,6 @@ export default {
 
         showUserErrorMessage() {
             return this.invalidUser && this.getUserField.touched && this.getUserField.value !== ''
-        },
-
-        showAuthorErrorMessage() {
-            return this.getAuthorField.value !== '' || this.invalidAuthor
         },
 
         getSelectedUserName() {
@@ -179,7 +167,7 @@ export default {
 
     methods: {
         ...mapActions('UserStore', ['fetchUsers']),
-        ...mapActions('FavStore', ['addFav', 'updateFavFormField', 'resetFavForm']),
+        ...mapActions('FavStore', ['addFav', 'updateFavFormField', 'resetFavForm', 'validateAndSetAuthorValue']),
 
         handleSubmit() {
             this.addFav()
@@ -202,19 +190,6 @@ export default {
             this.updateFavFormField({ field: 'user', attr: 'display', value: availableUser.display })
             this.updateFavFormField({ field: 'user', attr: 'userSearch', value: '' })
             this.fetchUsers('')
-        },
-
-        validateAndSetAuthor($e){
-            const value = $e.target.value
-
-            if(value !== '' && !(/^[a-zA-Z ]+$/).test(value)){
-                $e.target.value = (value.match(/([a-zA-Z ]+)/g) || []).join(' ')
-                this.invalidAuthor = true;
-            }else{
-                this.invalidAuthor = false
-            }
-
-            this.setValue($e)
         },
 
         setTouched($e) {
