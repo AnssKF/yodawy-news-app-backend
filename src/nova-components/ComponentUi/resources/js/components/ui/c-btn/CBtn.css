@@ -3,6 +3,8 @@
     color: var(--white);
     padding: 1em;
     border-radius: 3px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+    transition: .2s ease-in-out all;
 }
 
 .c-btn.btn-primary {
@@ -19,15 +21,10 @@
     color: var(--gray);
 }
 
-.c-btn-shadow-effect {
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-    transition: .2s ease-in-out all;
-}
-
-.c-btn-shadow-effect:hover {
+.c-btn:hover {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,.4);
 }
 
-.c-btn-shadow-effect:disabled:hover {
+.c-btn:disabled:hover {
     box-shadow: 0 1px 4px 0 rgba(0,0,0,.2);
 }

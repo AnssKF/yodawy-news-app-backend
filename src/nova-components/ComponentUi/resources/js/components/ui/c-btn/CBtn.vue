@@ -2,7 +2,7 @@
     <button 
         @click="handleOnClick"
         v-bind="$attrs"
-        class="c-btn c-btn-shadow-effect"
+        class="c-btn"
         :class="getBtnStyle">
         
         <slot>Submit</slot>
