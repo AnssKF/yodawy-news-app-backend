@@ -28,22 +28,31 @@ const resetFavForm = ({ commit }) => {
     commit(RESET_FAV_FORM)
 }
 
-const validateAndSetAuthorValue = ({ commit, dispatch }, $e) => {
-    let value = $e.target.value
+const validateAuthor = ({ commit }, value) => {
     let invalidAuthor = false;
 
     if(value !== '' && !(/^[a-zA-Z ]+$/).test(value)){
-        // $e.target.value = (value.match(/([a-zA-Z ]+)/g) || []).join(' ')
-        $e.target.value = value.replace(/([^a-zA-Z ])+/, '')
+        value = value.replace(/([^a-zA-Z ])+/, '')
         invalidAuthor = true;
     }else{
         invalidAuthor = false;
     }
 
-    dispatch('updateFavFormField', { field: 'author', attr: 'inValid', value: invalidAuthor })
-    dispatch('updateFavFormField', { field: 'author', attr: 'value', value: $e.target.value })
+    commit(UPDATE_FAV_FORM_FIELD, { field: 'author', attr: 'inValid', value: invalidAuthor })
+    return value
+}
+
+const validateAndSetAuthorValue = ({ commit, dispatch }, $e) => {
+    const value = $e.target.value
+    
+    dispatch('validateAuthor', value)
+        .then((newVal) => {
+            $e.target.value = newVal;
+            commit(UPDATE_FAV_FORM_FIELD, { field: 'author', attr: 'value', value: newVal })
+        })
+
 }
 
 export default {
-    addFav, updateFavFormField, resetFavForm, validateAndSetAuthorValue
+    addFav, updateFavFormField, resetFavForm, validateAndSetAuthorValue, validateAuthor
 }
