@@ -161,7 +161,7 @@ export default {
         },
 
         showAuthorErrorMessage() {
-            return !this.getAuthorField.value === '' || this.invalidAuthor
+            return this.getAuthorField.value !== '' || this.invalidAuthor
         },
 
         getSelectedUserName() {
@@ -181,19 +181,10 @@ export default {
         ...mapActions('UserStore', ['fetchUsers']),
         ...mapActions('FavStore', ['addFav', 'updateFavFormField', 'resetFavForm']),
 
-        async handleSubmit() {
-            const url = this.getUrlField.value;
-            const publishedAt = this.getPublishedAtField.value;
-            const user = this.getUserField.value;
-
-            try{
-                const res = await this.addFav({url, publishedAt, user})
-                Nova.success('Created')
-                this.resetFavForm()
-            }catch(e){
-                Nova.error('Error')
-            }
-            
+        handleSubmit() {
+            this.addFav()
+                .then(() => Nova.success('Created'))
+                .catch(() => Nova.error('Error'));
         },
 
         async handleSearchUser($e) {
