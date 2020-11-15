@@ -2,7 +2,7 @@
     <div class="c-fav-creation-form">
 
         <form @submit.prevent="handleSubmit">
-            <div class="c-card">
+            <div>
 
                 <div class="c-card__title-wrapper c-card__title__border-left">
                     <h2 class="c-card__title">Create Fav</h2>
