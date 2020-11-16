@@ -3,9 +3,7 @@ import { UPDATE_FAV_FORM_FIELD, RESET_FAV_FORM } from './mutations'
 const addFav = async ({ commit, state, getters }) => {
     const { invalidUrl, invalidPublishedAt, invalidUser } = getters
 
-    const url           = state.favForm.user.value;
-    const publishedAt   = state.favForm.publishedAt.value;
-    const user          = state.favForm.user.value;
+    const { url: {value: url},  publishedAt: {value: publishedAt}, user: {value: user}} = state.favForm;
 
     if(invalidUrl || invalidPublishedAt || invalidUser) return Promise.reject('Invalid Parameters')
 
