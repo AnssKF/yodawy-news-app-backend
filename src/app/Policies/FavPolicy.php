@@ -20,7 +20,7 @@ class FavPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isAn('admin');
+        return true;
     }
 
     /**
@@ -32,7 +32,8 @@ class FavPolicy
      */
     public function view(User $user, Favorite $favorite)
     {
-        return $user->isAn('admin');
+        if($user->isAn('admin')) return true;
+        return $favorite->user()->is($user);
     }
 
     /**
@@ -43,7 +44,7 @@ class FavPolicy
      */
     public function create(User $user)
     {
-        return $user->isAn('admin');
+        return true;
     }
 
     /**
@@ -55,7 +56,8 @@ class FavPolicy
      */
     public function update(User $user, Favorite $favorite)
     {
-        return $user->isAn('admin');
+        if($user->isAn('admin')) return true;
+        return $favorite->user()->is($user);
     }
 
     /**
@@ -67,7 +69,8 @@ class FavPolicy
      */
     public function delete(User $user, Favorite $favorite)
     {
-        return $user->isAn('admin');
+        if($user->isAn('admin')) return true;
+        return $favorite->user()->is($user);
     }
 
     /**
@@ -79,7 +82,8 @@ class FavPolicy
      */
     public function restore(User $user, Favorite $favorite)
     {
-        return $user->isAn('admin');
+        if($user->isAn('admin')) return true;
+        return $favorite->user()->is($user);
     }
 
     /**
@@ -91,6 +95,8 @@ class FavPolicy
      */
     public function forceDelete(User $user, Favorite $favorite)
     {
-        return $user->isAn('admin');
+        if($user->isAn('admin')) return true;
+        return $favorite->user()->is($user);
     }
+
 }
