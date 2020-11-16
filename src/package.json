@@ -11,7 +11,9 @@
         "build-fav-creation": "cd nova-components/FavCreation && npm run dev",
         "build-fav-creation-prod": "cd nova-components/FavCreation && npm run prod",
         "build-component-ui": "cd nova-components/ComponentUi && npm run dev",
-        "build-component-ui-prod": "cd nova-components/ComponentUi && npm run prod"
+        "build-component-ui-prod": "cd nova-components/ComponentUi && npm run prod",
+        "build-my-favorites": "cd nova-components/MyFavorites && npm run dev",
+        "build-my-favorites-prod": "cd nova-components/MyFavorites && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.19",

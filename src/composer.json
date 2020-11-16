@@ -19,7 +19,8 @@
         "silber/bouncer": "v1.0.0-rc.9",
         "venturecraft/revisionable": "1.*",
         "yodawy/fav-creation": "*",
-        "yodawy/component-ui": "*"
+        "yodawy/component-ui": "*",
+        "yodawy/my-favorites": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -76,6 +77,10 @@
         {
             "type": "path",
             "url": "./nova-components/ComponentUi"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/MyFavorites"
         }
     ]
 }
