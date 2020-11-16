@@ -35,6 +35,27 @@ class Fav extends Resource
     public static $search = [
         'id',
     ];
+
+    /**
+     * Show all favs to admins and only user related favs for regular users
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {   
+        if($request->user()->isAn('admin')) return $query;
+
+        return $query->where('user_id', $request->user()->id);
+    }
+
+    /**
+     * Admin can add favs to any user, regular user can only add fav to himself
+     */
+    public static function relatableUsers(NovaRequest $request, $query)
+    {
+        if($request->user()->isAn('admin')) return $query;
+
+        return $query->where('id', $request->user()->id);
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -47,7 +68,21 @@ class Fav extends Resource
             ID::make(__('ID'), 'id')->sortable(),
             Text::make('Url', 'url')->showOnIndex(),
             Text::make('Published at', 'publishedAt'),
-            BelongsTo::make('User', 'user')->searchable()
+            BelongsTo::make('User', 'user')
+                ->searchable()
+                ->default(function ($request) {
+                    /**
+                     * Set default value = current user id for only regular users
+                     */
+                    if($request->user()->isAn('admin')) return '';
+                    return $request->user()->id;
+                })
+                ->readonly(function ($request) {
+                    /**
+                     * Make field read only for regular users
+                     */
+                    return !$request->user()->isAn('admin');
+                })
         ];
     }
 
