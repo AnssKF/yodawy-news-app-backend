@@ -77,12 +77,6 @@ class Fav extends Resource
                     if($request->user()->isAn('admin')) return '';
                     return $request->user()->id;
                 })
-                ->readonly(function ($request) {
-                    /**
-                     * Make field read only for regular users
-                     */
-                    return !$request->user()->isAn('admin');
-                })
         ];
     }
 
