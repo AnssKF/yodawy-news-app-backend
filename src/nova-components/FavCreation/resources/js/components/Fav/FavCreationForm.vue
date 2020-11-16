@@ -2,16 +2,13 @@
     <div class="c-fav-creation-form">
 
         <form @submit.prevent="handleSubmit">
-            <div>
 
-                <div class="c-card__title-wrapper c-card__title__border-left">
-                    <h2 class="c-card__title">Create Fav</h2>
-                </div>
+            <c-card title="Create Fav">
 
                 <!-- URL -->
                 <div class="c-form-field-wrapper c-border-bottom">
-                    <FormField 
-                        :value="form.url.value"
+                    <form-field 
+                        :value="getUrlField.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
                         :danger="showUrlErrorMessage"
@@ -20,14 +17,14 @@
                         type="text" 
                         placeholder="URL of headline from newsapi.org"
                         help-text="Please enter a valid URL."
-                    >URL</FormField>
+                    >URL</form-field>
                 </div>
                 <!-- ./URL -->
 
                 <!-- PublishedAt -->
                 <div class="c-form-field-wrapper c-border-bottom">
-                    <FormField 
-                        :value="form.publishedAt.value"
+                    <form-field 
+                        :value="getPublishedAtField.value"
                         :on-input="setValue"
                         :on-blur="setTouched"
                         :danger="showPublishedAtErrorMessage"
@@ -36,9 +33,25 @@
                         type="date" 
                         placeholder="Headline publish date"
                         help-text="Please enter a valid date yyyy-mm-dd."
-                    >Published At</FormField>
+                    >Published At</form-field>
                 </div>
                 <!-- ./PublishedAt -->
+
+                <!-- Author -->
+                <div class="c-form-field-wrapper c-border-bottom">
+                    <form-field 
+                        :value="getAuthorField.value"
+                        :on-input="validateAndSetAuthorValue"
+                        :on-blur="setTouched"
+                        :danger="invalidAuthor"
+                        c-key="author"
+                        id="getAuthorField" 
+                        type="text" 
+                        placeholder="Name of Author"
+                        help-text="Author accepts only english litters."
+                    >Author</form-field>
+                </div>
+                <!-- ./Author -->
 
                 <!-- USER -->
                 <div class="c-form-field-wrapper c-border-bottom">
@@ -52,8 +65,8 @@
                     <div class="search-users">
                         
                         <!-- SearchField -->
-                            <FormField 
-                                :value="userSearch"
+                            <form-field 
+                                :value="getUserSearch"
                                 :on-input="handleSearchUser"
                                 :on-blur="setTouched"
                                 :danger="showUserErrorMessage"
@@ -62,13 +75,13 @@
                                 type="text" 
                                 placeholder="Search by username or email"
                                 help-text="Please select a valid user."
-                            >Select User</FormField>
+                            >Select User</form-field>
                         <!-- ./SearchField -->
 
                         <div class="c-search-options">
                             
                             <!-- Resultoption -->
-                            <div v-for="user in availableUsers" :key="user.value" @click="selectUser(user)"
+                            <div v-for="user in getAvailableUsers" :key="user.value" @click="selectUser(user)"
                                 class="search-option-wrapper">
                                 <div class="search-option">
                                     <div class="search-option__avatar">
@@ -99,83 +112,48 @@
                 <!-- ./USER -->
 
                 <div class="c-form-footer">
-                    <button 
+                    <c-btn
+                        :on-click="resetFavForm"
+                        style-type="danger"
+                        type="button"
+                        class="clear-btn"> X </c-btn>
+                    
+                    <c-btn
                         :disabled="submitDisabled"
-                        type="submit" 
-                        class="c-btn c-btn-shadow-effect">
-                        Create Fav
-                    </button>
+                        type="submit">Create Fav</c-btn>
                 </div>
-
-            </div> <!-- ./card -->
-
+            </c-card>
 
         </form>
     </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 // Styles
 import './FavCreationForm.css'
 
 export default {
     name: 'FavCreationForm',
 
-    data(){
-        return {
-            form: {
-                url: {
-                    value: '',
-                    touched: false
-                },
-                publishedAt: {
-                    value: '',
-                    touched: false
-                },
-                user: {
-                    value: '',
-                    display: '',
-                    touched: false
-                }
-            },
-
-            userSearch: '',
-            availableUsers: [],
-
-            searchUserCancelTokenSource: null,
-        }
-    },
-
     computed: {
-        invalidUrl() {
-            const url = this.form.url
-            return url.value === '' || !url.value.match(/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/)
-        },
-
-        invalidPublishedAt() {
-            const publishedAt = this.form.publishedAt
-            return publishedAt.value === '' || !publishedAt.value.match(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
-        },
-
-        invalidUser() {
-            const user = this.form.user
-            return user.value === ''
-        },
+        ...mapGetters('UserStore', ['getAvailableUsers']),
+        ...mapGetters('FavStore', ['getUserSearch', 'getUrlField', 'getPublishedAtField', 'getUserField', 'getAuthorField', 'invalidUrl', 'invalidPublishedAt', 'invalidUser', 'invalidAuthor']),
 
         showUrlErrorMessage() {
-            return this.invalidUrl && this.form.url.touched && this.form.url.value !== ''
+            return this.invalidUrl && this.getUrlField.touched && this.getUrlField.value !== ''
         },
 
         showPublishedAtErrorMessage() {
-            return this.invalidPublishedAt && this.form.publishedAt.touched && this.form.publishedAt.value !== ''
+            return this.invalidPublishedAt && this.getPublishedAtField.touched && this.getPublishedAtField.value !== ''
         },
 
         showUserErrorMessage() {
-            return this.invalidUser && this.form.user.touched && this.form.user.value !== ''
+            return this.invalidUser && this.getUserField.touched && this.getUserField.value !== ''
         },
 
         getSelectedUserName() {
-            return this.form.user.display ? `: ${this.form.user.display}`: ''
+            return this.getUserField.display ? `: ${this.getUserField.display}`: ''
         },
         
         submitDisabled() {
@@ -183,92 +161,58 @@ export default {
         },
 
         noSearchResults() {
-            return this.availableUsers.length === 0 && this.userSearch !== ''
+            return this.getAvailableUsers.length === 0 && this.getUserSearch !== ''
         }
     },
 
     methods: {
+        ...mapActions('UserStore', ['fetchUsers']),
+        ...mapActions('FavStore', ['addFav', 'updateFavFormField', 'resetFavForm', 'validateAndSetAuthorValue']),
+
         handleSubmit() {
-            const url = this.form.url.value;
-            const publishedAt = this.form.publishedAt.value;
-            const user = this.form.user.value;
-
-            Nova.request().post('/nova-api/favs', {
-                url, publishedAt, user
-            })
-                .then( _ => {
-                    Nova.success('Created')
-                    this.resetForm()
-                })
-                .catch( _ => {
-                    Nova.error('Error')
-                })
-            
+            this.addFav()
+                .then(() => Nova.success('Created'))
+                .catch(() => Nova.error('Error'));
         },
 
-        handleSearchUser($e) {
-            this.userSearch = $e.target.value;
+        async handleSearchUser($e) {
+            this.updateFavFormField({ field: 'user', attr: 'userSearch', value: $e.target.value })
 
-            if(this.searchUserCancelTokenSource) this.searchUserCancelTokenSource.cancel();
-
-            if(this.userSearch === '') return this.availableUsers = []
-
-            // Using axios not Nova.request() so i can cancel old request
-            // Nova.request have an error with axios.isCancel(response)
-
-            this.searchUserCancelTokenSource = axios.CancelToken.source();
-            axios.get('/nova-api/favs/associatable/user', {
-                params: {
-                    search: this.userSearch,
-                    first: false,
-                    withTrashed: false,
-                    viaResource: '',
-                    viaResourceId: '',
-                },
-
-                cancelToken: this.searchUserCancelTokenSource.token
-            })
-
-            .then( res => {
-                this.availableUsers = res.data.resources;
-            })
-            .catch( err => {
-                if (axios.isCancel(err)) return
-                else Nova.error('Error searching for user')
-            })
-        },
-
-        selectUser(availableUser) {
-            this.form.user.value = availableUser.value;
-            this.form.user.display = availableUser.display;
-            this.availableUsers = [];
-            this.userSearch = '';
-        },
-
-        resetForm(){
-            this.form = {
-                url: {
-                    value: '',
-                    valid: true
-                },
-                publishedAt: {
-                    value: '',
-                    valid: true
-                },
-                user: {
-                    value: '',
-                    valid: true,
-                    display: ''
-                }
+            try{
+                await this.fetchUsers(this.getUserSearch)
+            }catch(e) {
+                Nova.error('Error searching for user')
             }
         },
 
+        selectUser(availableUser) {
+            /**
+             * When select user update form field values, 
+             * Fetch Users with empty string cancel old requests and resets availableUsers state
+             */
+            this.updateFavFormField({ field: 'user', attr: 'value', value: availableUser.value })
+            this.updateFavFormField({ field: 'user', attr: 'display', value: availableUser.display })
+            this.updateFavFormField({ field: 'user', attr: 'userSearch', value: '' })
+            this.fetchUsers('')
+        },
+
         setTouched($e) {
-            this.form[$e.key].touched = true;
+            /**
+             * Set Form field as touched to display error messages.
+             * 
+             * @param 
+             *  - $e: FormField :on-input event that has 'key' property with form field name 
+             */
+            this.updateFavFormField({ field: $e.key, attr: 'touched', value: true })
         },
 
         setValue($e) {
-            this.form[$e.key].value = $e.target.value;
+            /**
+             * Update FavForm state with form values
+             * @param 
+             *  - $e: FormField :on-input event that has 'key' property with form field name 
+             */
+            this.updateFavFormField({ field: $e.key, attr: 'value', value: $e.target.value })
         }
     }
 }

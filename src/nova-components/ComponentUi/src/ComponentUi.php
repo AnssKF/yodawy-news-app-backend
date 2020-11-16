@@ -1,0 +1,28 @@
+<?php
+
+namespace Yodawy\ComponentUi;
+
+use Laravel\Nova\ResourceTool;
+
+class ComponentUi extends ResourceTool
+{
+    /**
+     * Get the displayable name of the resource tool.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return 'Component Ui';
+    }
+
+    /**
+     * Get the component name for the resource tool.
+     *
+     * @return string
+     */
+    public function component()
+    {
+        return 'component-ui';
+    }
+}

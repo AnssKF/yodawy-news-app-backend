@@ -39,6 +39,14 @@ class User extends Resource
     ];
 
     /**
+     * Display users resource only for admins
+     */
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->isAn('admin');
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request

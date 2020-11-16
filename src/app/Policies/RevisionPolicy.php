@@ -2,13 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Favorite;
+use App\Models\Revision;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-use Bouncer;
-
-class FavPolicy
+class RevisionPolicy
 {
     use HandlesAuthorization;
 
@@ -20,20 +18,19 @@ class FavPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->isAn('admin');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Revision  $revision
      * @return mixed
      */
-    public function view(User $user, Favorite $favorite)
+    public function view(User $user, Revision $revision)
     {
-        if($user->isAn('admin')) return true;
-        return $favorite->user()->is($user);
+        return $user->isAn('admin');
     }
 
     /**
@@ -44,59 +41,54 @@ class FavPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->isAn('admin');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Revision  $revision
      * @return mixed
      */
-    public function update(User $user, Favorite $favorite)
+    public function update(User $user, Revision $revision)
     {
-        if($user->isAn('admin')) return true;
-        return $favorite->user()->is($user);
+        return $user->isAn('admin');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Revision  $revision
      * @return mixed
      */
-    public function delete(User $user, Favorite $favorite)
+    public function delete(User $user, Revision $revision)
     {
-        if($user->isAn('admin')) return true;
-        return $favorite->user()->is($user);
+        return $user->isAn('admin');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Revision  $revision
      * @return mixed
      */
-    public function restore(User $user, Favorite $favorite)
+    public function restore(User $user, Revision $revision)
     {
-        if($user->isAn('admin')) return true;
-        return $favorite->user()->is($user);
+        return $user->isAn('admin');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Favorite  $favorite
+     * @param  \App\Models\Revision  $revision
      * @return mixed
      */
-    public function forceDelete(User $user, Favorite $favorite)
+    public function forceDelete(User $user, Revision $revision)
     {
-        if($user->isAn('admin')) return true;
-        return $favorite->user()->is($user);
+        return $user->isAn('admin');
     }
-
 }

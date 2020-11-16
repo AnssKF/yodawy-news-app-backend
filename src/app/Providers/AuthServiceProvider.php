@@ -9,6 +9,12 @@ use Laravel\Passport\Passport;
 use App\Models\Favorite;
 use App\Policies\FavPolicy;
 
+use App\Models\Revision;
+use App\Policies\RevisionPolicy;
+
+use Silber\Bouncer\Database\Role;
+use App\Policies\RolePolicy;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Models\Model' => 'App\Policies\ModelPolicy',
         Favorite::class => FavPolicy::class,
+        Revision::class => RevisionPolicy::class,
+        Role::class => RolePolicy::class
     ];
 
     /**

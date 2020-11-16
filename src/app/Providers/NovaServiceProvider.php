@@ -80,9 +80,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new FavCreation)->canSee(function ($request) {
-                return $request->user()->isAn('admin');
-            }),
+            new FavCreation,
         ];
     }
 

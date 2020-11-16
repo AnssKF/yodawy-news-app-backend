@@ -5,20 +5,19 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-use Laravel\Nova\Fields\BelongsTo;
+use App\Models\Revision as RevisionModel;
 
-use App\Models\Favorite;
-
-class Fav extends Resource
+class Revision extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = Favorite::class;
+    public static $model = RevisionModel::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -37,26 +36,6 @@ class Fav extends Resource
     ];
 
     /**
-     * Show all favs to admins and only user related favs for regular users
-     */
-    public static function indexQuery(NovaRequest $request, $query)
-    {   
-        if($request->user()->isAn('admin')) return $query;
-
-        return $query->where('user_id', $request->user()->id);
-    }
-
-    /**
-     * Admin can add favs to any user, regular user can only add fav to himself
-     */
-    public static function relatableUsers(NovaRequest $request, $query)
-    {
-        if($request->user()->isAn('admin')) return $query;
-
-        return $query->where('id', $request->user()->id);
-    }
-
-    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -66,17 +45,11 @@ class Fav extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Url', 'url')->showOnIndex(),
-            Text::make('Published at', 'publishedAt'),
-            BelongsTo::make('User', 'user')
-                ->searchable()
-                ->default(function ($request) {
-                    /**
-                     * Set default value = current user id for only regular users
-                     */
-                    if($request->user()->isAn('admin')) return '';
-                    return $request->user()->id;
-                })
+            Text::make('Revision Type', 'revisionable_type'),
+            BelongsTo::make('User', 'user'),
+            Text::make('Key', 'key'),
+            Text::make('Old Value', 'old_value'),
+            Text::make('New Value', 'new_value'),
         ];
     }
 
@@ -123,6 +96,4 @@ class Fav extends Resource
     {
         return [];
     }
-
-    public static $with = ['user'];
 }
