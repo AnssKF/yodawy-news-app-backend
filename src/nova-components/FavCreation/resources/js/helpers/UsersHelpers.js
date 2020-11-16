@@ -15,9 +15,10 @@ export class UsersHelper {
             const { 
                 title: display, 
                 id: {value: value}, 
-                fields: [, {previewUrl: avatar}]
             } = resource;
 
+            const { previewUrl: avatar } = resource.fields.find(_ => _.name === 'Avatar')
+            
             return [...acc, {display, value, avatar}]
         }, [])
 
