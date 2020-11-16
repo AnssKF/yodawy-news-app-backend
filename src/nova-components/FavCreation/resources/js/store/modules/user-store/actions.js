@@ -1,4 +1,5 @@
-import { SET_AVAILABLE_USERS, UPDATE_SEARCH_CANCEL_TOKEN_SOURCE } from './mutations'
+import { SET_AVAILABLE_USERS, UPDATE_SEARCH_CANCEL_TOKEN_SOURCE } from './mutations';
+import { UsersHelper } from '../../../helpers/UsersHelpers';
 
 
 const fetchUsers = async ({ commit, state }, searchResult) => {
@@ -24,22 +25,20 @@ const fetchUsers = async ({ commit, state }, searchResult) => {
 
     try {
         // ! Use AXIOS not Nova.request() because nova modify axios instance that not support cacel requests
-        const res = await axios.get('/nova-api/favs/associatable/user', {
+        const res = await axios.get('/nova-api/users', {
             params: {
                 search: searchResult,
-                first: false,
-                withTrashed: false,
-                viaResource: '',
-                viaResourceId: '',
             },
             cancelToken: searchCancelTokenSource.token
         })
 
-        if(!res.data.resources) return Promise.reject()
+        if(!res.data.resources) return Promise.reject('Invalid Response');
         
-        commit(SET_AVAILABLE_USERS, res.data.resources)
+        const availableUsers = UsersHelper.parseUserResources(res.data.resources)
+        commit(SET_AVAILABLE_USERS, availableUsers)
+
         return Promise.resolve()
-    }catch(err){
+    }catch(err) {
         if (axios.isCancel(err)) Promise.resolve()
         else Promise.reject()
     }
