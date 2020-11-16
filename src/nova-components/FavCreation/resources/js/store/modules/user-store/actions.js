@@ -32,7 +32,7 @@ const fetchUsers = async ({ commit, state }, searchResult) => {
             cancelToken: searchCancelTokenSource.token
         })
 
-        if(!res && !res.data && !res.data.resources) return Promise.reject('Invalid Response');
+        if(!res || !res.data || !res.data.resources) return Promise.reject('Invalid Response');
         
         const availableUsers = UsersHelper.parseUserResources(res.data.resources)
         commit(SET_AVAILABLE_USERS, availableUsers)
