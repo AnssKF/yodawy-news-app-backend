@@ -25,6 +25,9 @@ export default {
             default: false
         },
         helpText: {
+            /**
+             * Help Text to be display on danger value
+             */
             type: String,
             default: 'Please insert a valid data.'
         },
@@ -37,10 +40,16 @@ export default {
             default: null
         },
         extras: {
+            /**
+             * Any extra data to be passed to form field .. Its added to each output event on-blur | on-input
+             */
             type: Object,
             default: {}
         },
         cKey: {
+            /**
+             * Key to be unique to identify form field events
+             */
             type: String,
         }
     },

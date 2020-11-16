@@ -186,6 +186,10 @@ export default {
         },
 
         selectUser(availableUser) {
+            /**
+             * When select user update form field values, 
+             * Fetch Users with empty string cancel old requests and resets availableUsers state
+             */
             this.updateFavFormField({ field: 'user', attr: 'value', value: availableUser.value })
             this.updateFavFormField({ field: 'user', attr: 'display', value: availableUser.display })
             this.updateFavFormField({ field: 'user', attr: 'userSearch', value: '' })
@@ -193,10 +197,21 @@ export default {
         },
 
         setTouched($e) {
+            /**
+             * Set Form field as touched to display error messages.
+             * 
+             * @param 
+             *  - $e: FormField :on-input event that has 'key' property with form field name 
+             */
             this.updateFavFormField({ field: $e.key, attr: 'touched', value: true })
         },
 
         setValue($e) {
+            /**
+             * Update FavForm state with form values
+             * @param 
+             *  - $e: FormField :on-input event that has 'key' property with form field name 
+             */
             this.updateFavFormField({ field: $e.key, attr: 'value', value: $e.target.value })
         }
     }

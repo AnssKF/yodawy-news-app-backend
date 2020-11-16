@@ -2,6 +2,11 @@ import { SET_AVAILABLE_USERS, UPDATE_SEARCH_CANCEL_TOKEN_SOURCE } from './mutati
 
 
 const fetchUsers = async ({ commit, state }, searchResult) => {
+    /**
+     * Search Users by username | email ...
+     */
+
+    // Get latest request cancel token
     let searchCancelTokenSource = state.searchCancelTokenSource;
 
     // Cancel Old Request
@@ -18,6 +23,7 @@ const fetchUsers = async ({ commit, state }, searchResult) => {
     commit(UPDATE_SEARCH_CANCEL_TOKEN_SOURCE, searchCancelTokenSource)
 
     try {
+        // ! Use AXIOS not Nova.request() because nova modify axios instance that not support cacel requests
         const res = await axios.get('/nova-api/favs/associatable/user', {
             params: {
                 search: searchResult,
