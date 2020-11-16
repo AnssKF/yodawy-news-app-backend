@@ -1,7 +1,9 @@
-import { registerStoreModules } from './store'
+import { registerStoreModules } from './store';
+import { registerComponents } from './components';
 
 Nova.booting((Vue, router, store) => {
   registerStoreModules(store);
+  registerComponents(Vue)
 
   router.addRoutes([
     {
