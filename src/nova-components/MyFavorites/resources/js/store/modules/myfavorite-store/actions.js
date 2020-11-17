@@ -4,14 +4,7 @@ import { FavoritesHelper } from '../../../helpers/FavoritesHelper';
 const fetchMyFavorites = async ({ commit }) => {
 
     try {
-        const res = await Nova.request().get('/nova-api/favs', {
-            params: {
-                viaResource: 'users',
-                viaResourceId: Nova.config.userId,
-                viaRelationship: 'favs',
-                relationshipType: 'hasMany'
-            }
-        })
+        const res = await Nova.request().get('/nova-api/favs')
 
         if(res && res.data && res.data && res.data.resources) {
             const favs = FavoritesHelper.parseFavoritesResources(res.data.resources)
