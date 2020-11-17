@@ -1,4 +1,4 @@
-import { UPDATE_MY_FAVORITE_MUTATION, TOGGLE_FAVORITE_POSTED_STATUS } from './mutations';
+import { UPDATE_MY_FAVORITE_MUTATION, TOGGLE_FAVORITE_POSTED_STATUS, UPDATE_FAVORITES_PAGINATOR } from './mutations';
 import { FavoritesHelper } from '../../../helpers/FavoritesHelper';
 
 const fetchMyFavorites = async ({ commit }, page=1) => {
@@ -16,6 +16,8 @@ const fetchMyFavorites = async ({ commit }, page=1) => {
             commit(UPDATE_MY_FAVORITE_MUTATION, favs)
 
             const { prev_page_url, next_page_url, per_page} = res.data
+            commit(UPDATE_FAVORITES_PAGINATOR, {prev_page_url, next_page_url, per_page})
+
             return Promise.resolve({
                 prev_page_url,
                 next_page_url,
@@ -47,6 +49,16 @@ const toggleFavPostedStatus = async ({ commit }, favId) => {
     }
 }
 
+const getNextPage = ({ dispatch, state }) => {
+    const page = +(new URL(state.paginator.next_page_url)).searchParams.get('page');
+    dispatch('fetchMyFavorites', page)
+}
+
+const getPreviousPage = ({ dispatch, state }) => {
+    const page = +(new URL(state.paginator.prev_page_url)).searchParams.get('page');
+    dispatch('fetchMyFavorites', page)
+}
+
 export default {
-    fetchMyFavorites, toggleFavPostedStatus
+    fetchMyFavorites, toggleFavPostedStatus, getNextPage, getPreviousPage
 }

@@ -17,8 +17,8 @@
 
             <div class="paginator-wrapper">
                 <paginator
-                    :disabled-previoud="!paginator.prev_page_url"
-                    :disabled-next="!paginator.next_page_url"
+                    :disabled-previoud="!hasPrevPage"
+                    :disabled-next="!hasNextPage"
                     :on-next="getNextPage"
                     :on-previous="getPreviousPage"
                 ></paginator>
@@ -38,43 +38,21 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: 'my-favorites',
-    data() {
-        return {
-            paginator: {
-                prev_page_url: null,
-                next_page_url: null,
-                per_page: null,
-            }
-        }
-    },
     computed: {
-        ...mapGetters('MyFavsStore', ['getMyFavorites'])
+        ...mapGetters('MyFavsStore', ['getMyFavorites', 'hasPrevPage', 'hasNextPage'])
     },
     methods: {
-        ...mapActions('MyFavsStore', ['fetchMyFavorites']),
-
-        getNextPage() {
-            const page = +(new URL(this.paginator.next_page_url)).searchParams.get('page');
-            this.getFavs(page)
-        },
-        getPreviousPage() {
-            const page = +(new URL(this.paginator.prev_page_url)).searchParams.get('page');
-            this.getFavs(page)
-        },
-
-        getFavs(page = 1){
-            this.fetchMyFavorites(page)
-                .then( res => {
-                    const { prev_page_url, next_page_url, per_page } = res;
-                    this.paginator = {prev_page_url, next_page_url, per_page}
-                })
-                .catch(() => {
-                    Nova.error('Error while fetching your favorites.')
-                })
-        }
+        ...mapActions('MyFavsStore', ['fetchMyFavorites', 'getNextPage', 'getPreviousPage']),
     },
     mounted() {
-        this.getFavs()
+        this.fetchMyFavorites()
+            .then( res => {
+                const { prev_page_url, next_page_url, per_page } = res;
+                this.paginator = {prev_page_url, next_page_url, per_page}
+            })
+            .catch(() => {
+                Nova.error('Error while fetching your favorites.')
+            })
     },
 }
 </script>
