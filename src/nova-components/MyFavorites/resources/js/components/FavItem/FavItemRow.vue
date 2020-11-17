@@ -3,6 +3,7 @@
         <td>{{ fav.id }}</td>
         <td>{{ fav.url }}</td>
         <td>{{ fav.publishedAt }}</td>
+        <td>{{ fav.user }}</td>
         <td>
             <a class="fav-posted-action" @click="togglePosted">{{ getFavPostActionName }}</a>
         </td>
