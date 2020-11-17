@@ -1,0 +1,14 @@
+
+.paginator {
+    display: flex;
+    justify-content: space-between;
+}
+
+.paginator .paginator-btn {
+    cursor: pointer;
+}
+
+.paginator .paginator-btn.disabled {
+    cursor: not-allowed;
+    color: var(--gray);
+}
