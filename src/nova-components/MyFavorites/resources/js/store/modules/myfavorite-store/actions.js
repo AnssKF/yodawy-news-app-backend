@@ -1,16 +1,27 @@
 import { UPDATE_MY_FAVORITE_MUTATION, TOGGLE_FAVORITE_POSTED_STATUS } from './mutations';
 import { FavoritesHelper } from '../../../helpers/FavoritesHelper';
 
-const fetchMyFavorites = async ({ commit }) => {
+const fetchMyFavorites = async ({ commit }, page=1) => {
 
     try {
-        const res = await Nova.request().get('/nova-api/favs')
+        const res = await Nova.request().get('/nova-api/favs', {
+            params: {
+                page,
+                perPage: 10,
+            }
+        })
 
         if(res && res.data && res.data && res.data.resources) {
             const favs = FavoritesHelper.parseFavoritesResources(res.data.resources)
             commit(UPDATE_MY_FAVORITE_MUTATION, favs)
 
-            return Promise.resolve(favs)
+            const { prev_page_url, next_page_url, per_page} = res.data
+            return Promise.resolve({
+                prev_page_url,
+                next_page_url,
+                per_page,
+                results: favs
+            })
         }else {
             return Promise.reject('Invalid Response')
         }
