@@ -45,13 +45,13 @@ export default {
     methods: {
         handelOnPrev() {
             if(this.onPrevious === null || this.disabledPrevioud) return
-            if(! this.onPrevious instanceof Function) throw 'onPrevioes Prop should be instance of Function';
+            if(! this.onPrevious instanceof Function) throw 'onPrevious Prop should be instance of Function';
             this.onPrevious()
         },
 
         handelOnNext() {
             if(this.onNext === null || this.disabledNext) return
-            if(! this.onNext instanceof Function) throw 'onPrevioes Prop should be instance of Function';
+            if(! this.onNext instanceof Function) throw 'onNext Prop should be instance of Function';
             this.onNext()
         }
     }
