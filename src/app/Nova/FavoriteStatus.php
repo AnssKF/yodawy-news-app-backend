@@ -4,23 +4,24 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasOne;
+use App\Models\FavoriteStatus as FavoriteStatusModel;
 
-use App\Models\Favorite;
-
-class Fav extends Resource
+class FavoriteStatus extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = Favorite::class;
+    public static $model = FavoriteStatusModel::class;
+
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user()->isAn('admin');
+    }
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -39,26 +40,6 @@ class Fav extends Resource
     ];
 
     /**
-     * Show all favs to admins and only user related favs for regular users
-     */
-    public static function indexQuery(NovaRequest $request, $query)
-    {   
-        if($request->user()->isAn('admin')) return $query;
-
-        return $query->where('user_id', $request->user()->id);
-    }
-
-    /**
-     * Admin can add favs to any user, regular user can only add fav to himself
-     */
-    public static function relatableUsers(NovaRequest $request, $query)
-    {
-        if($request->user()->isAn('admin')) return $query;
-
-        return $query->where('id', $request->user()->id);
-    }
-
-    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -68,18 +49,7 @@ class Fav extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Url', 'url')->showOnIndex(),
-            Text::make('Published at', 'publishedAt'),
-            BelongsTo::make('User', 'user')
-                ->searchable()
-                ->default(function ($request) {
-                    /**
-                     * Set default value = current user id for only regular users
-                     */
-                    if($request->user()->isAn('admin')) return '';
-                    return $request->user()->id;
-                }),
-            Boolean::make('Posted', 'status.posted'),
+            Boolean::make('Posted', 'posted'),
         ];
     }
 
@@ -126,6 +96,4 @@ class Fav extends Resource
     {
         return [];
     }
-
-    public static $with = ['user'];
 }
