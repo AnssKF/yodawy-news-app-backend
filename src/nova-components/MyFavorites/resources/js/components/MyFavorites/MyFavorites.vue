@@ -46,10 +46,6 @@ export default {
     },
     mounted() {
         this.fetchMyFavorites()
-            .then( res => {
-                const { prev_page_url, next_page_url, per_page } = res;
-                this.paginator = {prev_page_url, next_page_url, per_page}
-            })
             .catch(() => {
                 Nova.error('Error while fetching your favorites.')
             })
