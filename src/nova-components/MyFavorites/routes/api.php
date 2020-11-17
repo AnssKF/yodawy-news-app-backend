@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Favorite;
+
 /*
 |--------------------------------------------------------------------------
 | Tool API Routes
@@ -14,6 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/endpoint', function (Request $request) {
-//     //
-// });
+Route::post('/toggle-posted', function (Request $request) {
+    
+    $validatedData = $request->validate(['id'=>'required']);
+
+    $favId = $validatedData['id'];
+    $currentUserId = $request->user()->id;
+
+    // $fav = Favorite::findOrFail($favId);
+    $fav = Favorite::where([
+        'id' => $favId,
+        'user_id' =>  $currentUserId
+    ])->firstOrFail();
+
+    $fav->posted = !$fav->posted;
+    $fav->save();
+    
+    return response()->json([ 'results' => $fav ]);
+});
