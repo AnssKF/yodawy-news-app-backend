@@ -20,3 +20,7 @@
     padding: var(--mp-5);
     text-align: center;
 }
+
+.paginator-wrapper {
+    padding: var(--mp-4) var(--mp-8);
+}
