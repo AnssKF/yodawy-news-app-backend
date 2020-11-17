@@ -24,13 +24,13 @@ export default {
     },
     computed: {
         getFavPostActionName() {
-            return this.fav['status.posted'] ? 'Unpost': 'Post';
+            return this.fav.posted ? 'Unpost': 'Post';
         },
 
         getFavItemClassList() {
             return {
                 'fav-item': true,
-                'posted': this.fav['status.posted']
+                'posted': this.fav.posted
             }
         }
     },
@@ -39,7 +39,7 @@ export default {
 
         togglePosted() {
             this.toggleFavPostedStatus(this.fav.id)
-                .then(() => Nova.success(this.fav['status.posted']? 'Posted': 'Unposted'))
+                .then(() => Nova.success(this.fav.posted? 'Posted': 'Unposted'))
                 .catch(() => Nova.error('Error'))
         }
     },
