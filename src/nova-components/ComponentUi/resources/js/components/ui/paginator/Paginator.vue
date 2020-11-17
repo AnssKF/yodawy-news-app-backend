@@ -1,7 +1,7 @@
 <template>
   <div class="paginator">
-        <a class="paginator-btn previous" :class="getPrevClassList" @click="handelOnPrev">&laquo; Previous</a>
-        <a class="paginator-btn next" :class="getNextClassList" @click="handelOnNext">Next &raquo;</a>
+        <a :class="getPrevClassList" @click="handelOnPrev">&laquo; Previous</a>
+        <a :class="getNextClassList" @click="handelOnNext">Next &raquo;</a>
     </div>
 </template>
 
@@ -30,14 +30,14 @@ export default {
     computed: {
         getPrevClassList() {
             return {
-                'paginator-btn previous': true,
+                'paginator-btn': true,
                 'disabled': this.disabledPrevioud
             }
         },
 
         getNextClassList() {
             return {
-                'paginator-btn next': true,
+                'paginator-btn': true,
                 'disabled': this.disabledNext
             }
         }
