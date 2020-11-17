@@ -7,8 +7,8 @@ const updateMyFavoriteMutation = (state, favorites) => {
 export const TOGGLE_FAVORITE_POSTED_STATUS = 'TOOGLE_FAVORITE_POSTED_STATUS'
 const toggleFavoritePostedStatus = (state, favId) => {
     const favIndex = state.myFavorites.findIndex( _ => _.id === favId)
-    const fav = state.myFavorites[favIndex]
-    state.myFavorites[favIndex].posted = !fav.posted
+    const fav = state.myFavorites[favIndex]; 
+    state.myFavorites[favIndex]['status.posted'] = !fav['status.posted']
 }
 
 export const UPDATE_FAVORITES_PAGINATOR = 'UPDATE_FAVORITES_PAGINATOR'
