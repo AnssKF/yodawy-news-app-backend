@@ -1,9 +1,9 @@
 <template>
     <tr :class="getFavItemClassList">
-        <td>{{ fav.id }}</td>
-        <td>{{ fav.url }}</td>
-        <td>{{ fav.publishedAt }}</td>
-        <td>{{ fav.user }}</td>
+        <td>{{ getFavField('id') }}</td>
+        <td>{{ getFavField('url') }}</td>
+        <td>{{ getFavField('publishedAt') }}</td>
+        <td>{{ getFavField('user') }}</td>
         <td>
             <a class="fav-posted-action" @click="togglePosted">{{ getFavPostActionName }}</a>
         </td>
@@ -37,10 +37,17 @@ export default {
     methods: {
         ...mapActions('MyFavsStore', ['toggleFavPostedStatus']),
 
+        getFavField(field){
+            if(this.fav && this.fav[field]) return this.fav[field]
+            return '-'
+        },
+
         togglePosted() {
-            this.toggleFavPostedStatus(this.fav.id)
-                .then(() => Nova.success(this.fav.posted? 'Posted': 'Unposted'))
-                .catch(() => Nova.error('Error'))
+            if(this.fav && this.fav.id){
+                this.toggleFavPostedStatus(this.fav.id)
+                    .then(() => Nova.success(this.fav.posted? 'Posted': 'Unposted'))
+                    .catch(() => Nova.error('Error'))
+            }
         }
     },
 }
