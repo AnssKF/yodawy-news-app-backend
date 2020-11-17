@@ -1,4 +1,4 @@
-import { UPDATE_MY_FAVORITE_MUTATION } from './mutations';
+import { UPDATE_MY_FAVORITE_MUTATION, TOGGLE_FAVORITE_POSTED_STATUS } from './mutations';
 import { FavoritesHelper } from '../../../helpers/FavoritesHelper';
 
 const fetchMyFavorites = async ({ commit }) => {
@@ -19,6 +19,23 @@ const fetchMyFavorites = async ({ commit }) => {
     }
 }
 
+const toggleFavPostedStatus = async ({ commit }, favId) => {
+    try {
+        const res = await Nova.request().post('/nova-vendor/my-favorites/toggle-posted', {
+            id: favId
+        })
+
+        if(res && res.data && res.data.results) {
+            commit(TOGGLE_FAVORITE_POSTED_STATUS, favId)
+            return Promise.resolve(res)
+        }
+        
+        return Promise.reject('Invalid Response')
+    }catch(err) {
+        return Promise.reject(err)
+    }
+}
+
 export default {
-    fetchMyFavorites
+    fetchMyFavorites, toggleFavPostedStatus
 }
