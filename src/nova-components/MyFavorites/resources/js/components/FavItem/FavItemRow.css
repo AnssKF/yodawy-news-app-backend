@@ -1,0 +1,11 @@
+
+.fav-item.posted {
+    border-left: 3px solid var(--success);
+    background-color: var(--gray);
+}
+
+.fav-item .fav-posted-action {
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--primary);
+}
