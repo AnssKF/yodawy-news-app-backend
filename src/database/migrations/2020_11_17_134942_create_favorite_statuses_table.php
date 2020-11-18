@@ -38,7 +38,7 @@ class CreateFavoriteStatusesTable extends Migration
     {
         Schema::dropIfExists('statuses');
 
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('favorites', function (Blueprint $table) {
             $table->dropColumn('status_id');
         });
     }
