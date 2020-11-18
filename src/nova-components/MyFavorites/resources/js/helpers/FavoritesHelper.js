@@ -1,4 +1,3 @@
-import { filter } from "lodash";
 
 export class FavoritesHelper {
 
@@ -12,7 +11,12 @@ export class FavoritesHelper {
                     attr = split[split.length - 1]
                 }
 
-                return { ...oldFieldsAcc, [attr]: currentField.value }
+                let value = {value: currentField.value}
+                if( currentField.belongsToRelationship && currentField.belongsToId ) {
+                    value['id'] = currentField.belongsToId
+                }
+
+                return { ...oldFieldsAcc, [attr]: value }
             }, {})
             return [...oldFavsAcc, fav]
         }, [])

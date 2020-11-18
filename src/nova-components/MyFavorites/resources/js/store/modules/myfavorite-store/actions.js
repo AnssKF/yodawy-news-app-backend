@@ -43,7 +43,7 @@ const toggleFavPostedStatus = async ({ commit }, favId) => {
         })
 
         if(res && res.data && res.data.results) {
-            commit(TOGGLE_FAVORITE_POSTED_STATUS, favId)
+            commit(TOGGLE_FAVORITE_POSTED_STATUS, res.data.results)
             return Promise.resolve(res)
         }
         

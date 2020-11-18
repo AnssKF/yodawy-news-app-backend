@@ -23,18 +23,17 @@ Route::post('/toggle-posted', function (Request $request) {
     $favId = $validatedData['id'];
     $currentUser = $request->user();
 
-    if($currentUser->isAn('admin')){
-        $fav = Favorite::findOrFail($favId);
-    }else {
-        $fav = Favorite::where([
-            'id' => $favId,
-            'user_id' =>  $currentUser->id
-        ])->firstOrFail();
+    $data = [
+        'id' => $favId
+    ];
+
+    if(!$currentUser->isAn('admin')){
+        $data['user_id'] =  $currentUser->id;
     }
     
-    $status = $fav->status()->firstOrNew([]);
-    $status->posted = !$status->posted;
-    $status->save();
+    $fav = Favorite::where($data)->firstOrFail();
+    $fav->status_id = $fav->status_id == 1 ? 2 : 1;
+    $fav->save();
     
-    return response()->json([ 'results' => $status ]);
+    return response()->json([ 'results' => $fav ]);
 });

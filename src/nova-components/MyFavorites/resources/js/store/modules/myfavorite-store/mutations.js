@@ -1,3 +1,4 @@
+import { STATUS } from '../../../helpers/StatusHelper';
 
 export const UPDATE_MY_FAVORITE_MUTATION = 'UPDATE_MY_FAVORITE_MUTATION'
 const updateMyFavoriteMutation = (state, favorites) => {
@@ -5,10 +6,12 @@ const updateMyFavoriteMutation = (state, favorites) => {
 }
 
 export const TOGGLE_FAVORITE_POSTED_STATUS = 'TOOGLE_FAVORITE_POSTED_STATUS'
-const toggleFavoritePostedStatus = (state, favId) => {
-    const favIndex = state.myFavorites.findIndex( _ => _.id === favId)
-    const fav = state.myFavorites[favIndex]; 
-    state.myFavorites[favIndex].posted = !fav.posted
+const toggleFavoritePostedStatus = (state, newFav) => {
+    const oldFavIndex = state.myFavorites.findIndex( _ => _.id.value === newFav.id)
+    state.myFavorites[oldFavIndex].status = {
+        id: newFav.status_id,
+        value: newFav.status_id === STATUS.UNPOSTED ? 'Posted': 'Unposted'
+    }
 }
 
 export const UPDATE_FAVORITES_PAGINATOR = 'UPDATE_FAVORITES_PAGINATOR'
