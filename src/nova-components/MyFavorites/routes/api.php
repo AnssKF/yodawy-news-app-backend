@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\Favorite;
-use App\Models\FavoriteStatus;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,17 +31,9 @@ Route::post('/toggle-posted', function (Request $request) {
             'user_id' =>  $currentUser->id
         ])->firstOrFail();
     }
-
-    $status = $fav->status;
-    if($status) {
-        $status['posted'] = !$status['posted'];
-    } 
-    else {
-        $status = new FavoriteStatus();
-        $status->favorite_id = $favId;
-        $status->posted = true;
-    }
-
+    
+    $status = $fav->status()->firstOrNew([]);
+    $status->posted = !$status->posted;
     $status->save();
     
     return response()->json([ 'results' => $status ]);
