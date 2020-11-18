@@ -79,7 +79,17 @@ class Fav extends Resource
                     if($request->user()->isAn('admin')) return '';
                     return $request->user()->id;
                 }),
-            Boolean::make('Posted', 'status.posted'),
+            Boolean::make('Posted', 'status.posted')
+                ->default(false)
+                ->fillUsing(function ($request, $model){
+                    $status = $model->status()->firstOrNew([]);
+                    $status->posted = (bool) $request->status_posted;
+                    if(!$model->id){
+                        $model->save();
+                        $status->favorite_id = $model->id;
+                    }
+                    $status->save();
+                }),
         ];
     }
 
