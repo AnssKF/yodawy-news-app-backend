@@ -17,8 +17,14 @@ const updateFavoritesPaginator = (state, paginator) => {
     state.paginator = {prev_page_url, next_page_url, per_page}
 }
 
+export const UPDATE_DATE_RANGE_FILTER = 'UPDATE_DATE_RANGE_FILTER'
+const updateDateRangeFilte = (state, { dateFrom, dateTo }) => {
+    state.filters = { dateFrom, dateTo }
+}
+
 export default {
     [UPDATE_MY_FAVORITE_MUTATION]: updateMyFavoriteMutation,
     [TOGGLE_FAVORITE_POSTED_STATUS]: toggleFavoritePostedStatus,
-    [UPDATE_FAVORITES_PAGINATOR]: updateFavoritesPaginator
+    [UPDATE_FAVORITES_PAGINATOR]: updateFavoritesPaginator,
+    [UPDATE_DATE_RANGE_FILTER]: updateDateRangeFilte
 }

@@ -1,12 +1,16 @@
-import { UPDATE_MY_FAVORITE_MUTATION, TOGGLE_FAVORITE_POSTED_STATUS, UPDATE_FAVORITES_PAGINATOR } from './mutations';
+import { UPDATE_MY_FAVORITE_MUTATION, TOGGLE_FAVORITE_POSTED_STATUS, UPDATE_FAVORITES_PAGINATOR, UPDATE_DATE_RANGE_FILTER } from './mutations';
 import { FavoritesHelper } from '../../../helpers/FavoritesHelper';
 
-const fetchMyFavorites = async ({ commit }, page=1) => {
-
+const fetchMyFavorites = async ({ commit, getters }, page=1) => {
+    const { getDateFromFilters, getDateToFilters } = getters;
+    
     try {
+        const filters = FavoritesHelper.encodeDateFromToFilter({dateFrom: getDateFromFilters, dateTo: getDateToFilters})
+        
         const res = await Nova.request().get('/nova-api/favs', {
             params: {
                 page,
+                filters,
                 perPage: 10,
             }
         })
@@ -59,6 +63,10 @@ const getPreviousPage = ({ dispatch, state }) => {
     dispatch('fetchMyFavorites', page)
 }
 
+const setDateFilter = ({ commit }, { dateFrom, dateTo }) => {
+    commit(UPDATE_DATE_RANGE_FILTER, { dateFrom, dateTo })
+}
+
 export default {
-    fetchMyFavorites, toggleFavPostedStatus, getNextPage, getPreviousPage
+    fetchMyFavorites, toggleFavPostedStatus, getNextPage, getPreviousPage, setDateFilter
 }

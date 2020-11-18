@@ -5,7 +5,13 @@ export const PAGINATOR_INITIAL_STATE = () => ({
     per_page: 10,
 })
 
+export const FAVORITE_LIST_FILTER_INIT_STATE = () => ({
+    dateFrom: '',
+    dateTo: ''
+})
+
 export default {
     myFavorites: [],
-    paginator: PAGINATOR_INITIAL_STATE()
+    paginator: PAGINATOR_INITIAL_STATE(),
+    filters: FAVORITE_LIST_FILTER_INIT_STATE()
 }
