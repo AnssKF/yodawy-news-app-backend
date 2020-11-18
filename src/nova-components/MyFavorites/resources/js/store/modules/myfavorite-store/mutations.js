@@ -18,7 +18,8 @@ const updateFavoritesPaginator = (state, paginator) => {
 }
 
 export const UPDATE_DATE_RANGE_FILTER = 'UPDATE_DATE_RANGE_FILTER'
-const updateDateRangeFilte = (state, { dateFrom, dateTo }) => {
+const updateDateRangeFilte = (state, range) => {
+    const { dateFrom = '', dateTo = '' } = range;
     state.filters = { dateFrom, dateTo }
 }
 
