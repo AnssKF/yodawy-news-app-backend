@@ -12,6 +12,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasOne;
 
+// Filters
+use App\Nova\Filters\FavoriteDateFromFilter;
+use App\Nova\Filters\FavoriteDateToFilter;
+
 use App\Models\Favorite;
 
 class Fav extends Resource
@@ -113,7 +117,10 @@ class Fav extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new FavoriteDateFromFilter,
+            new FavoriteDateToFilter,
+        ];
     }
 
     /**
