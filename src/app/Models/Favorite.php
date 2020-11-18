@@ -29,4 +29,8 @@ class Favorite extends Model
     public function status() {
         return $this->hasOne(FavoriteStatus::class);
     }
+
+    protected $casts = [
+        'publishedAt' => 'date',
+    ];
 }
