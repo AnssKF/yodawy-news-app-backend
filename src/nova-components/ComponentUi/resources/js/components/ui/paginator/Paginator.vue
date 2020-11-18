@@ -10,7 +10,7 @@ import './Paginator.css'
 export default {
     name: 'paginator',
     props: {
-        disabledPrevioud: {
+        disabledPrevious: {
             type: Boolean,
             default: null
         },
@@ -31,7 +31,7 @@ export default {
         getPrevClassList() {
             return {
                 'paginator-btn': true,
-                'disabled': this.disabledPrevioud
+                'disabled': this.disabledPrevious
             }
         },
 
@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         handelOnPrev() {
-            if(this.onPrevious === null || this.disabledPrevioud) return
+            if(this.onPrevious === null || this.disabledPrevious) return
             if(! this.onPrevious instanceof Function) throw 'onPrevious Prop should be instance of Function';
             this.onPrevious()
         },

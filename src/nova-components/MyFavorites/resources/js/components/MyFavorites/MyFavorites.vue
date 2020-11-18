@@ -20,7 +20,7 @@
 
             <div class="paginator-wrapper">
                 <paginator
-                    :disabled-previoud="!hasPrevPage"
+                    :disabled-previous="!hasPrevPage"
                     :disabled-next="!hasNextPage"
                     :on-next="getNextPage"
                     :on-previous="getPreviousPage"
