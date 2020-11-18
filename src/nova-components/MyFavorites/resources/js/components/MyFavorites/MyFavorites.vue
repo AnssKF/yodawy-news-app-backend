@@ -1,5 +1,8 @@
 <template>
     <c-card title="My Favorites">
+
+        <fav-date-filter>
+        </fav-date-filter>
         
         <template v-if="getMyFavorites.length">
             <table class="fav-table">
