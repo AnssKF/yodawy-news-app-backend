@@ -4,19 +4,19 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-use App\Models\FavoriteStatus as FavoriteStatusModel;
+use App\Models\Status as StatusModel;
 
-class FavoriteStatus extends Resource
+class Status extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = FavoriteStatusModel::class;
+    public static $model = StatusModel::class;
 
     public static function availableForNavigation(Request $request)
     {
@@ -28,7 +28,7 @@ class FavoriteStatus extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'status';
 
     /**
      * The columns that should be searched.
@@ -49,7 +49,7 @@ class FavoriteStatus extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Boolean::make('Posted', 'posted'),
+            Text::make('Status', 'status'),
         ];
     }
 

@@ -6,16 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \Venturecraft\Revisionable\RevisionableTrait;
 
-class FavoriteStatus extends Model
+use App\Models\Favorite;
+
+class Status extends Model
 {
     use HasFactory, RevisionableTrait;
 
     protected $fillable = [
-        'favorite_id',
-        'posted'
     ];
 
     protected $casts = [
-        'posted' => 'boolean',
     ];
+
+    public function favorites(){
+        return $this->hasMany(Favorite::class);
+    }
 }

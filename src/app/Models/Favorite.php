@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use \Venturecraft\Revisionable\RevisionableTrait;
 use App\Models\User;
-use App\Models\FavoriteStatus;
+use App\Models\Status;
 
 class Favorite extends Model
 {
@@ -27,7 +27,7 @@ class Favorite extends Model
     }
 
     public function status() {
-        return $this->hasOne(FavoriteStatus::class);
+        return $this->belongsTo(Status::class);
     }
 
     protected $casts = [
