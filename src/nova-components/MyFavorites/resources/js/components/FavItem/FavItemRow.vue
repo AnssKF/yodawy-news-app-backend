@@ -46,7 +46,11 @@ export default {
         togglePosted() {
             if(this.fav && this.fav.id){
                 this.toggleFavPostedStatus(this.fav.id)
-                    .then(() => Nova.success(this.fav.status.id === STATUS.POSTED ? 'Posted': 'Unposted'))
+                    .then(() => {
+                        if(this.fav && this.fav.status){
+                            Nova.success(this.fav.status.id === STATUS.POSTED ? 'Posted': 'Unposted')
+                        }
+                    })
                     .catch(() => Nova.error('Error'))
             }
         }
