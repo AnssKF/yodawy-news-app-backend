@@ -16,8 +16,8 @@ class StatusSeeder extends Seeder
     public function run()
     {
         Status::insert([
-            ['status' => 'Unposted'],
-            ['status' => 'Posted'],
+            ['name' => 'Unposted'],
+            ['name' => 'Posted'],
         ]);
     }
 }

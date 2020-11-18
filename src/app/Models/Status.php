@@ -13,6 +13,7 @@ class Status extends Model
     use HasFactory, RevisionableTrait;
 
     protected $fillable = [
+        'name'
     ];
 
     protected $casts = [

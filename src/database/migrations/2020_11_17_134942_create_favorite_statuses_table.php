@@ -15,17 +15,8 @@ class CreateFavoriteStatusesTable extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->char('status')->unique();
+            $table->char('name')->unique();
             $table->timestamps();
-        });
-
-        Schema::table('favorites', function (Blueprint $table) {
-            $table->foreignId('status_id')->default(1);
-
-            $table->foreign('status_id')
-                ->references('id')
-                ->on('statuses')
-                ->onDelete('cascade');
         });
     }
 
@@ -37,9 +28,5 @@ class CreateFavoriteStatusesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('statuses');
-
-        Schema::table('favorites', function (Blueprint $table) {
-            $table->dropColumn('status_id');
-        });
     }
 }

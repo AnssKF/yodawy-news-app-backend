@@ -28,7 +28,7 @@ class Status extends Resource
      *
      * @var string
      */
-    public static $title = 'status';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -49,7 +49,7 @@ class Status extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Status', 'status'),
+            Text::make('Name', 'name'),
         ];
     }
 
