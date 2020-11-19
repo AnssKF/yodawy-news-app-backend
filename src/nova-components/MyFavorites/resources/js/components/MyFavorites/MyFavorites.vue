@@ -10,18 +10,11 @@
         </date-range-filter>
         
         <template v-if="getMyFavorites.length">
-            <table class="fav-table">
-                <tr>
-                    <th>ID</th>
-                    <th>Url</th>
-                    <th>Published At</th>
-                    <th>User Name</th>
-                    <th>Actions</th>
-                </tr>
-
+            <c-table>
+                <c-table-header :headers="headers"/>
                 <fav-item-row v-for="fav in getMyFavorites" :key="fav.id" :fav="fav">
                 </fav-item-row>
-            </table>
+            </c-table>
 
             <div class="paginator-wrapper">
                 <paginator
@@ -46,6 +39,11 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: 'my-favorites',
+    data() {
+        return {
+            headers: [ 'ID', 'Url', 'Published At', 'User Name', 'Actions' ]
+        }
+    },
     computed: {
         ...mapGetters('MyFavsStore', ['getMyFavorites', 'hasPrevPage', 'hasNextPage', 'getDateFromFilters', 'getDateToFilters'])
     },
