@@ -15,7 +15,7 @@ class FavoriteController extends Controller
         $user = Auth::user();
 
         $favs = Favorite::where('user_id', $user->id)->get();
-        return response()->json(["results" => $favs]);
+        return response()->json(["results" => $favs], 200);
     }
 
     public function create(Request $request) {
@@ -33,7 +33,7 @@ class FavoriteController extends Controller
             'user_id' => $userId
         ]);
 
-        return response()->json([$fav]);
+        return response()->json([$fav], 200);
     }
 
     public function destroy(Request $request) {
@@ -52,27 +52,27 @@ class FavoriteController extends Controller
 
         if(!$fav) return response()->json(["message" => 'There is no favs with this payload.'], 400);
         
-        return response()->json(["results" => $fav]);
+        return response()->json(["results" => $fav], 200);
     }
 
     public function togglePosted(Request $request) {
+        
+        if(!Auth::check()){
+            return response()->json([ 'message' => 'You are not authorized to perform this action.' ], 401);
+        }
+
         $validatedData = $request->validate(['id'=>'required']);
 
         $favId = $validatedData['id'];
         $currentUser = $request->user();
+        $fav = Favorite::where(['id' => $favId ])->firstOrFail();
 
-        $data = [
-            'id' => $favId
-        ];
-
-        if(!$currentUser->isAn('admin')){
-            $data['user_id'] =  $currentUser->id;
+        if(!$currentUser->can('update', $fav)){
+            return response()->json([ 'message' => 'You are not authorized to perform this action.' ], 401);
         }
-        
-        $fav = Favorite::where($data)->firstOrFail();
+
         $fav->status_id = $fav->status_id == 1 ? 2 : 1;
         $fav->save();
-        
-        return response()->json([ 'results' => $fav ]);
+        return response()->json([ 'results' => $fav ], 200);
     }
 }
