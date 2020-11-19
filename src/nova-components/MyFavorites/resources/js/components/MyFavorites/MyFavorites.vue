@@ -52,7 +52,9 @@ export default {
     methods: {
         ...mapActions('MyFavsStore', ['fetchMyFavorites', 'getNextPage', 'getPreviousPage', 'setDateFilter']),
 
-        dateRangeChange({ from, to }){
+        dateRangeChange(range){
+            const { from = '', to = '' } = range;
+            
             this.setDateFilter({ 
                 dateFrom: from,
                 dateTo: to,

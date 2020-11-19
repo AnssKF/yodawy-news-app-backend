@@ -57,22 +57,22 @@ export default {
     },
     computed: {
         getFromLabel() {
-            if(this.fromLabel) return this.fromLabel;
+            if(this.fromLabel && this.fromLabel instanceof String) return this.fromLabel;
             return 'Date From';
         },
 
         getFromValue() {
-            if(this.fromValue) return this.fromValue;
+            if(this.fromValue && this.fromValue instanceof String) return this.fromValue;
             return '' 
         },
 
         getToLabel() {
-            if(this.toLabel) return this.toLabel;
+            if(this.toLabel && this.toLabel instanceof String) return this.toLabel;
             return 'Date To';
         },
 
         getToValue() {
-            if(this.toValue) return this.toValue;
+            if(this.toValue && this.toValue instanceof String) return this.toValue;
             return '' 
         },
     },
