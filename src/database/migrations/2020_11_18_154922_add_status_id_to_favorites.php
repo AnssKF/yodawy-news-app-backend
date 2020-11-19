@@ -15,7 +15,6 @@ class AddStatusIdToFavorites extends Migration
     {
         Schema::table('favorites', function (Blueprint $table) {
             $table->foreignId('status_id')->default(1);
-
             $table->foreign('status_id')
                 ->references('id')
                 ->on('statuses')
