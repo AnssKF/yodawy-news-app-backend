@@ -137,5 +137,5 @@ class Fav extends Resource
         return [];
     }
 
-    public static $with = ['user'];
+    public static $with = ['user', 'status'];
 }
