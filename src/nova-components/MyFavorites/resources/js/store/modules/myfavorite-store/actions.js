@@ -42,9 +42,10 @@ const fetchMyFavorites = async ({ commit, getters }, page=1) => {
     }
 }
 
-const toggleFavPostedStatus = async ({ commit }, favId) => {
+const toggleFavPostedStatus = async ({ commit }, {favId, status}) => {
     try {
         const res = await Nova.request().post('/nova-vendor/my-favorites/toggle-posted', {
+            status,
             id: favId
         })
 

@@ -56,10 +56,13 @@ export default {
         },
 
         togglePosted() {
-            if(this.fav && this.fav.id){
-                this.toggleFavPostedStatus(this.fav.id)
+            const STATUS = this.getAvailableStatuses;
+
+            if(this.fav && this.fav.id && this.fav.id.value && STATUS.UNPOSTED && STATUS.POSTED){
+                const toggleToStatus = this.fav.status.id === STATUS.UNPOSTED ? 'Posted' : 'Unposted';
+
+                this.toggleFavPostedStatus({favId: this.fav.id.value, status: toggleToStatus})
                     .then(() => {
-                        const STATUS = this.getAvailableStatuses;
                         if(this.fav && this.fav.status && this.fav.status.id && STATUS.POSTED){
                             Nova.success(this.fav.status.id === STATUS.POSTED ? 'Posted': 'Unposted')
                         }
