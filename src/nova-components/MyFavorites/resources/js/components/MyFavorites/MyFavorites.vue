@@ -1,8 +1,13 @@
 <template>
     <c-card title="My Favorites">
 
-        <fav-date-filter>
-        </fav-date-filter>
+        <date-range-filter
+            :on-change-values="dateRangeChange"
+            from-label="Published From:"
+            :from-value="getDateFromFilters"
+            to-label="Published To:"
+            :to-value="getDateToFilters">
+        </date-range-filter>
         
         <template v-if="getMyFavorites.length">
             <table class="fav-table">
@@ -42,10 +47,18 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'my-favorites',
     computed: {
-        ...mapGetters('MyFavsStore', ['getMyFavorites', 'hasPrevPage', 'hasNextPage'])
+        ...mapGetters('MyFavsStore', ['getMyFavorites', 'hasPrevPage', 'hasNextPage', 'getDateFromFilters', 'getDateToFilters'])
     },
     methods: {
-        ...mapActions('MyFavsStore', ['fetchMyFavorites', 'getNextPage', 'getPreviousPage']),
+        ...mapActions('MyFavsStore', ['fetchMyFavorites', 'getNextPage', 'getPreviousPage', 'setDateFilter']),
+
+        dateRangeChange({ from, to }){
+            this.setDateFilter({ 
+                dateFrom: from,
+                dateTo: to,
+            })
+                .then(() => this.fetchMyFavorites() )
+        }
     },
     mounted() {
         this.fetchMyFavorites()
