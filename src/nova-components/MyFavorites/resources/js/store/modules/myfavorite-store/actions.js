@@ -1,5 +1,11 @@
-import { UPDATE_MY_FAVORITE_MUTATION, TOGGLE_FAVORITE_POSTED_STATUS, UPDATE_FAVORITES_PAGINATOR, UPDATE_DATE_RANGE_FILTER } from './mutations';
+import { 
+    UPDATE_MY_FAVORITE_MUTATION, 
+    TOGGLE_FAVORITE_POSTED_STATUS, 
+    UPDATE_FAVORITES_PAGINATOR, 
+    UPDATE_DATE_RANGE_FILTER,
+    UPDATE_STATUSES } from './mutations';
 import { FavoritesHelper } from '../../../helpers/FavoritesHelper';
+import { StatusHelper } from '../../../helpers/StatusHelper';
 
 const fetchMyFavorites = async ({ commit, getters }, page=1) => {
     const { getDateFromFilters, getDateToFilters } = getters;
@@ -67,6 +73,20 @@ const setDateFilter = ({ commit }, { dateFrom, dateTo }) => {
     commit(UPDATE_DATE_RANGE_FILTER, { dateFrom, dateTo })
 }
 
+const fetchStatuses = async ({ commit }) => {
+    try {
+        const res = await Nova.request().get('/nova-api/statuses')
+        if(res && res.data && res.data && res.data.resources) {
+            const statuses = StatusHelper.parseStatusesResource(res.data.resources)
+            commit(UPDATE_STATUSES, statuses)
+        }else {
+            return Promise.reject('Invalid Response')
+        }
+    }catch(err) {
+        return Promise.reject(err)
+    }
+}
+
 export default {
-    fetchMyFavorites, toggleFavPostedStatus, getNextPage, getPreviousPage, setDateFilter
+    fetchMyFavorites, toggleFavPostedStatus, getNextPage, getPreviousPage, setDateFilter, fetchStatuses
 }

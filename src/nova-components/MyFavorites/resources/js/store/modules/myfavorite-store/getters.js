@@ -8,4 +8,6 @@ export default {
 
     getDateFromFilters: state => (state.filters.dateFrom),
     getDateToFilters: state => (state.filters.dateTo),
+
+    getAvailableStatuses: state => (state.statuses)
 }

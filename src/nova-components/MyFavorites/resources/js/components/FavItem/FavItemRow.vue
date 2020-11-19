@@ -12,8 +12,7 @@
 
 <script>
 import './FavItemRow.css';
-import { mapActions } from 'vuex';
-import { STATUS } from '../../helpers/StatusHelper';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     name: 'fav-item-row',
@@ -24,16 +23,21 @@ export default {
         }
     },
     computed: {
+        ...mapGetters('MyFavsStore', ['getAvailableStatuses']),
+
         getFavPostActionName() {
-            if(this.fav && this.fav.status && this.fav.status.id)
+            const STATUS = this.getAvailableStatuses;
+
+            if(this.fav && this.fav.status && this.fav.status.id && STATUS.POSTED)
                 return this.fav.status.id === STATUS.POSTED ? 'Unpost': 'Post';
             else 
                 return ''
         },
 
         getFavItemClassList() {
+            const STATUS = this.getAvailableStatuses;
             let posted = false;
-            if(this.fav && this.fav.status && this.fav.status.id) {
+            if(this.fav && this.fav.status && this.fav.status.id && STATUS.POSTED) {
                 posted = this.fav.status.id === STATUS.POSTED
             }
 
@@ -55,7 +59,8 @@ export default {
             if(this.fav && this.fav.id){
                 this.toggleFavPostedStatus(this.fav.id)
                     .then(() => {
-                        if(this.fav && this.fav.status && this.fav.status.id){
+                        const STATUS = this.getAvailableStatuses;
+                        if(this.fav && this.fav.status && this.fav.status.id && STATUS.POSTED){
                             Nova.success(this.fav.status.id === STATUS.POSTED ? 'Posted': 'Unposted')
                         }
                     })

@@ -48,7 +48,7 @@ export default {
         ...mapGetters('MyFavsStore', ['getMyFavorites', 'hasPrevPage', 'hasNextPage', 'getDateFromFilters', 'getDateToFilters'])
     },
     methods: {
-        ...mapActions('MyFavsStore', ['fetchMyFavorites', 'getNextPage', 'getPreviousPage', 'setDateFilter']),
+        ...mapActions('MyFavsStore', ['fetchMyFavorites', 'getNextPage', 'getPreviousPage', 'setDateFilter', 'fetchStatuses']),
 
         dateRangeChange(range){
             const { from = '', to = '' } = range;
@@ -61,6 +61,7 @@ export default {
         }
     },
     mounted() {
+        this.fetchStatuses()
         this.fetchMyFavorites()
             .catch(() => {
                 Nova.error('Error while fetching your favorites.')
