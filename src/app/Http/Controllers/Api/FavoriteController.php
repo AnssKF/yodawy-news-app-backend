@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 use App\Models\Favorite;
+use App\Models\Status;
 
 class FavoriteController extends Controller
 {
@@ -71,7 +71,10 @@ class FavoriteController extends Controller
             return response()->json([ 'message' => 'You are not authorized to perform this action.' ], 401);
         }
 
-        $fav->status_id = $fav->status_id == 1 ? 2 : 1;
+        $posted = Status::firstOrCreate(['name' => 'Posted']);
+        $unPosted = Status::firstOrCreate(['name'=> 'Unposted']);
+
+        $fav->status_id = $fav->status_id == $unPosted->id ? $posted->id : $unPosted->id;
         $fav->save();
         return response()->json([ 'results' => $fav ], 200);
     }
