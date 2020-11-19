@@ -61,9 +61,13 @@ class FavoriteController extends Controller
             return response()->json([ 'message' => 'You are not authorized to perform this action.' ], 401);
         }
 
-        $validatedData = $request->validate(['id'=>'required']);
+        $validatedData = $request->validate([
+                'id' => 'required',
+                'status' => 'required'
+            ]);
 
         $favId = $validatedData['id'];
+        $statusValue = $validatedData['status'];
         $currentUser = $request->user();
         $fav = Favorite::where(['id' => $favId ])->firstOrFail();
 
@@ -71,10 +75,9 @@ class FavoriteController extends Controller
             return response()->json([ 'message' => 'You are not authorized to perform this action.' ], 401);
         }
 
-        $posted = Status::firstOrCreate(['name' => 'Posted']);
-        $unPosted = Status::firstOrCreate(['name'=> 'Unposted']);
+        $status = Status::whereRaw('UPPER(name) = ?', [strtoupper($statusValue)])->first();
 
-        $fav->status_id = $fav->status_id == $unPosted->id ? $posted->id : $unPosted->id;
+        $fav->status_id = $status->id;
         $fav->save();
         return response()->json([ 'results' => $fav ], 200);
     }
