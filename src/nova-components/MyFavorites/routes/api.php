@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\Favorite;
+use App\Http\Controllers\Api\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,24 +17,4 @@ use App\Models\Favorite;
 |
 */
 
-Route::post('/toggle-posted', function (Request $request) {
-    
-    $validatedData = $request->validate(['id'=>'required']);
-
-    $favId = $validatedData['id'];
-    $currentUser = $request->user();
-
-    $data = [
-        'id' => $favId
-    ];
-
-    if(!$currentUser->isAn('admin')){
-        $data['user_id'] =  $currentUser->id;
-    }
-    
-    $fav = Favorite::where($data)->firstOrFail();
-    $fav->status_id = $fav->status_id == 1 ? 2 : 1;
-    $fav->save();
-    
-    return response()->json([ 'results' => $fav ]);
-});
+Route::post('/toggle-posted', [FavoriteController::class, 'togglePosted']);
