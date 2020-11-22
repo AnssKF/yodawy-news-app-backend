@@ -82,7 +82,7 @@ export default {
             if(!this.onChangeValues instanceof Function) throw 'onChangeValues prop should be instance of Function';
             
             const value = $e.target.value;
-            if( value !== '' && !value.match(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)) return 
+            if( value !== '' && !moment(value, 'YYYY-MM-DD', true).isValid()) return 
 
             const key = $e.key;
             if(key === 'dateFrom') this.from = value;
