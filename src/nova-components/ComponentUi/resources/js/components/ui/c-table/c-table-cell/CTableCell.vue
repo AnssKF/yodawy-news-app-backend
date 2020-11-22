@@ -2,7 +2,7 @@
     <td>
         <template v-if="isTextCell">
             <span :class="cell.cssClass">
-                {{ getFieldValue }}
+                {{ getValue }}
             </span>
         </template>
 
@@ -23,10 +23,6 @@ export default {
         cell: {
             type: Object,
             required: true
-        },
-        fieldValue: {
-            type: String,
-            default: null
         },
         row: {
             type: Object,
@@ -51,6 +47,13 @@ export default {
             if(typeof this.cell.actionText === 'string') return this.cell.actionText;
             if(this.cell.actionText instanceof Function) return this.cell.actionText(this.row);
             return ''
+        },
+
+        getValue() {
+            if(this.cell.type === 'text' && this.cell.field){
+                if(this.row && this.row[this.cell.field]) return this.row[this.cell.field];
+            }
+            return '-'
         }
     },
     methods: {
@@ -59,7 +62,7 @@ export default {
             if(!this.cell.actionHandler instanceof Function) throw 'actionHandler should be instance of Function'
 
             this.cell.actionHandler(this.row)
-        }
+        },
     },
 }
 </script>

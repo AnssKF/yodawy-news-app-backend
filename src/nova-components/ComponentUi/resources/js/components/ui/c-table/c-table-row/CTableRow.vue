@@ -1,7 +1,7 @@
 <template>
     <tr :class="getTrClass">
         <template v-for="(cell, index) in getCells">
-            <c-table-cell :cell="cell" :key="index" :row="getRowData" :field-value="getValue(cell)"/>
+            <c-table-cell :cell="cell" :key="index" :row="getRowData"/>
         </template>
     </tr>
 </template>
@@ -37,19 +37,10 @@ export default {
         },
         getTrClass() {
             if(typeof this.trClass === 'function') return this.trClass(this.getRowData);
-            if(typeof this.trClass === 'string' || this.trClass instanceof Object) return this.trClass;
+            if(typeof this.trClass === 'string' || typeof this.trClass === 'object') return this.trClass;
             else {
-                throw 'trClass should be String or Instance of Object';
+                throw 'trClass should be type of String, Object or Function';
             }
-        }
-    },
-    methods: {
-        getValue(cell) {
-            if(cell.type === 'text' && cell.field){
-                const data = this.getRowData;
-                if(data[cell.field]) return data[cell.field];
-            }
-            return '-'
         }
     },
 }
