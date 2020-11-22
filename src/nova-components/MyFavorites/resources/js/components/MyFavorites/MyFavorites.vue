@@ -10,11 +10,7 @@
         </date-range-filter>
         
         <template v-if="getMyFavorites.length">
-            <c-table>
-                <c-table-header :headers="headers"/>
-                <fav-item-row v-for="fav in getMyFavorites" :key="fav.id" :fav="fav">
-                </fav-item-row>
-            </c-table>
+            <c-table :columns="columns" :data="getTableData" :tr-class="getRowCssClass"></c-table>
 
             <div class="paginator-wrapper">
                 <paginator
@@ -41,14 +37,60 @@ export default {
     name: 'my-favorites',
     data() {
         return {
-            headers: [ 'ID', 'Url', 'Published At', 'User Name', 'Actions' ]
+            columns: [
+                {
+                    cell: {
+                        type: 'text',
+                        field: 'id'
+                    },
+                    header: 'ID'
+                }, 
+                {
+                    cell: {
+                        type: 'text',
+                        field: 'url'
+                    },
+                    header: 'Url'
+                }, 
+                {
+                    cell: {
+                        type: 'text',
+                        field: 'publishedAt'
+                    },
+                    header: 'Published At'
+                }, 
+                {
+                    cell: {
+                        type: 'text',
+                        field: 'user'
+                    },
+                    header: 'User Name'
+                }, 
+                {
+                    cell: {
+                        type: 'action',
+                        actionText: this.getTogglePostedActionText,
+                        actionHandler: this.togglePosted
+                    },
+                    header: 'Actions'
+                }
+            ],
         }
     },
     computed: {
-        ...mapGetters('MyFavsStore', ['getMyFavorites', 'hasPrevPage', 'hasNextPage', 'getDateFromFilters', 'getDateToFilters'])
+        ...mapGetters('MyFavsStore', ['getMyFavorites', 'hasPrevPage', 'hasNextPage', 'getDateFromFilters', 'getDateToFilters', 'getAvailableStatuses', 'getFavoriteById']),
+
+        getTableData() {
+            const data = this.getMyFavorites.reduce((acc, fav) => { 
+                const { id: {value: id}, publishedAt:{value: publishedAt}, url:{value: url}, user:{value: user} } = fav;
+                return [...acc, { id, publishedAt, url, user } ]
+            }, [])
+
+            return data
+        },
     },
     methods: {
-        ...mapActions('MyFavsStore', ['fetchMyFavorites', 'getNextPage', 'getPreviousPage', 'setDateFilter', 'fetchStatuses']),
+        ...mapActions('MyFavsStore', ['fetchMyFavorites', 'getNextPage', 'getPreviousPage', 'setDateFilter', 'fetchStatuses', 'toggleFavPostedStatus']),
 
         dateRangeChange(range){
             const { from = '', to = '' } = range;
@@ -58,6 +100,36 @@ export default {
                 dateTo: to,
             })
                 .then(() => this.fetchMyFavorites() )
+        },
+
+        togglePosted(row) {
+            this.toggleFavPostedStatus(row.id)
+                .then((toggledToStatus) => {
+                    Nova.success(toggledToStatus.toLowerCase() === 'posted' ? 'Posted': 'Unposted')
+                })
+                .catch(() => Nova.error('Error'))
+        },
+
+        getTogglePostedActionText(row) {
+            const fav = this.getFavoriteById(row.id);
+            const STATUS = this.getAvailableStatuses;
+
+            if(fav && fav.status && fav.status.id && STATUS.UNPOSTED){
+                return fav.status.id === STATUS.UNPOSTED ? 'Post' : 'Unpost';
+            }else{
+                return '';
+            }
+        },
+
+        getRowCssClass(row) {
+            const fav = this.getFavoriteById(row.id);
+            const STATUS = this.getAvailableStatuses;
+
+            if(fav && fav.status && fav.status.id && STATUS.POSTED && fav.status.id === STATUS.POSTED){
+                return 'fav-item-posted'
+            }else{
+                return null;
+            }
         }
     },
     mounted() {

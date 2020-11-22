@@ -8,3 +8,8 @@
 .paginator-wrapper {
     padding: var(--mp-4) var(--mp-8);
 }
+
+.fav-item-posted {
+    border-left: 3px solid var(--success);
+    background-color: var(--gray);
+}

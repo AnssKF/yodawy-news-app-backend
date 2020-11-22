@@ -42,21 +42,32 @@ const fetchMyFavorites = async ({ commit, getters }, page=1) => {
     }
 }
 
-const toggleFavPostedStatus = async ({ commit }, {favId, status}) => {
-    try {
-        const res = await Nova.request().post('/nova-vendor/my-favorites/toggle-posted', {
-            status,
-            id: favId
-        })
+const toggleFavPostedStatus = async ({ commit, getters }, favId) => {
+    const { getFavoriteById, getAvailableStatuses } = getters;
 
-        if(res && res.data && res.data.results) {
-            commit(TOGGLE_FAVORITE_POSTED_STATUS, res.data.results)
-            return Promise.resolve(res)
+    const fav = getFavoriteById(favId);
+    const STATUS = getAvailableStatuses;
+
+    if(fav && fav.status && fav.status.id && STATUS.UNPOSTED){
+        const toggleToStatus = fav.status.id === STATUS.UNPOSTED ? 'Posted' : 'Unposted';
+
+        try {
+            const res = await Nova.request().post('/nova-vendor/my-favorites/toggle-posted', {
+                status: toggleToStatus,
+                id: favId
+            })
+
+            if(res && res.data && res.data.results) {
+                commit(TOGGLE_FAVORITE_POSTED_STATUS, res.data.results)
+                return Promise.resolve(toggleToStatus)
+            }
+            
+            return Promise.reject('Invalid Response')
+        }catch(err) {
+            return Promise.reject(err)
         }
-        
-        return Promise.reject('Invalid Response')
-    }catch(err) {
-        return Promise.reject(err)
+    }else {
+        Promise.reject('Error')
     }
 }
 

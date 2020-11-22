@@ -2,6 +2,9 @@
 export default {
     getPerPage: state => (state.perPage),
     getMyFavorites: state => (state.myFavorites),
+    getFavoriteById: state => (id) => {
+        return state.myFavorites.find((_) => _.id.value === id)
+    },
     getPaginator: state => (state.paginator),
 
     hasPrevPage: state => (!!state.paginator.prev_page_url),
