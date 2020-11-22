@@ -21,7 +21,7 @@ const fetchMyFavorites = async ({ commit, getters }, page=1) => {
             }
         })
 
-        if(res && res.data && res.data && res.data.resources) {
+        if(res && res.data && res.data.resources) {
             const favs = FavoritesHelper.parseFavoritesResources(res.data.resources)
             commit(UPDATE_MY_FAVORITE_MUTATION, favs)
 
