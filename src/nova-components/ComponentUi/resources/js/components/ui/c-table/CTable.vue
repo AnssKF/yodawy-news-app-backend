@@ -2,9 +2,12 @@
     <table class="c-table">
         <c-table-header :headers="headers"/>
 
-        <template v-for="(row, index) in getData">
-            <c-table-row :key="index" :row-data="row" :tr-class="trClass" :cells="cells"></c-table-row>
-        </template>
+        <c-table-row 
+            v-for="(row, index) in getData"
+            :key="index" 
+            :row-data="row" 
+            :tr-class="trClass" 
+            :cells="cells" />
 
     </table>
 </template>

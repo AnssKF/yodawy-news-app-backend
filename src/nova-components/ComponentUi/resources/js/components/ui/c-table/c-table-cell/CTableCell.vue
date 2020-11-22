@@ -1,18 +1,18 @@
 <template>
     <td>
-        <template v-if="isTextCell">
-            <span :class="cell.cssClass">
-                {{ getValue }}
-            </span>
-        </template>
+        <span v-if="isTextCell" :class="cell.cssClass">
+            {{ getValue }}
+        </span>
 
-        <template v-else-if="isActionCell">
-            <a class="c-table-action" :class="cell.cssClass" @click="actionClicked">{{ getActionText }}</a>
-        </template>
+        <a 
+            v-else-if="isActionCell" 
+            class="c-table-action" 
+            :class="cell.cssClass" 
+            @click="actionClicked">{{ getActionText }}</a>
 
-        <template v-else>
+        <span v-else>
             -
-        </template>
+        </span>
     </td>
 </template>
 
@@ -36,11 +36,6 @@ export default {
 
         isActionCell() {
             return this.cell.type.toLowerCase() === 'action'
-        },
-
-        getFieldValue(){
-            if(this.fieldValue) return this.fieldValue;
-            return '-'
         },
 
         getActionText() {

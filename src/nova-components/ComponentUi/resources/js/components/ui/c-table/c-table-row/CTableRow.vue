@@ -1,8 +1,10 @@
 <template>
     <tr :class="getTrClass">
-        <template v-for="(cell, index) in getCells">
-            <c-table-cell :cell="cell" :key="index" :row="getRowData"/>
-        </template>
+    <c-table-cell 
+        v-for="(cell, index) in getCells"
+        :cell="cell" 
+        :key="index" 
+        :row="getRowData"/>
     </tr>
 </template>
 
