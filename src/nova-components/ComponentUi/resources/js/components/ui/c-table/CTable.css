@@ -1,0 +1,15 @@
+.c-table {
+    width: 100%;
+    text-align: left;
+    margin: var(--mp-5) auto;
+}
+
+.c-table th, 
+.c-table td {
+    padding: var(--mp-4) var(--mp-2);
+}
+
+.c-table tr th:first-child,
+.c-table tr td:first-child {
+    padding-left: var(--mp-8);
+}

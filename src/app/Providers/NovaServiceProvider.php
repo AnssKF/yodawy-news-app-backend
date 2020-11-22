@@ -8,6 +8,7 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 use Yodawy\FavCreation\FavCreation;
+use Yodawy\MyFavorites\MyFavorites;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -81,6 +82,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new FavCreation,
+            new MyFavorites,
         ];
     }
 

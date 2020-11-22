@@ -5,9 +5,16 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasOne;
+
+// Filters
+use App\Nova\Filters\FavoriteDateFromFilter;
+use App\Nova\Filters\FavoriteDateToFilter;
 
 use App\Models\Favorite;
 
@@ -67,7 +74,7 @@ class Fav extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Text::make('Url', 'url')->showOnIndex(),
-            Text::make('Published at', 'publishedAt'),
+            Date::make('Published at', 'publishedAt'),
             BelongsTo::make('User', 'user')
                 ->searchable()
                 ->default(function ($request) {
@@ -76,7 +83,10 @@ class Fav extends Resource
                      */
                     if($request->user()->isAn('admin')) return '';
                     return $request->user()->id;
-                })
+                }),
+            BelongsTo::make('Status', 'status')
+                ->hideWhenCreating()
+                ->default(1)
         ];
     }
 
@@ -99,7 +109,10 @@ class Fav extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new FavoriteDateFromFilter,
+            new FavoriteDateToFilter,
+        ];
     }
 
     /**
@@ -124,5 +137,5 @@ class Fav extends Resource
         return [];
     }
 
-    public static $with = ['user'];
+    public static $with = ['user', 'status'];
 }

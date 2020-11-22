@@ -1,0 +1,14 @@
+
+.date-range-filter {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--mp-4) var(--mp-8);
+}
+
+.date-range-filter .date-field {
+    margin-right: var(--mp-4);
+}
+
+.date-range-filter .date-field:last-of-type {
+    margin-right: unset;
+}

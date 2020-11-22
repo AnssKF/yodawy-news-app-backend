@@ -1,0 +1,15 @@
+.no-data-available {
+    font-size: var(--mp-5);
+    font-weight: 800;
+    padding: var(--mp-5);
+    text-align: center;
+}
+
+.paginator-wrapper {
+    padding: var(--mp-4) var(--mp-8);
+}
+
+.fav-item-posted {
+    border-left: 3px solid var(--success);
+    background-color: var(--gray);
+}

@@ -23,16 +23,10 @@
     position: absolute;
     pointer-events: none;
     left: 5px;
-    top: 0px;
+    top: -15px;
     transition: 0.2s ease all;
     -moz-transition: 0.2s ease all;
     -webkit-transition: 0.2s ease all;
-}
-
-.c-ff-group input:focus~label,
-.c-ff-group input:valid~label {
-    top: -15px;
-    font-size: 14px;
 }
 
 .c-ff-group .bar {
