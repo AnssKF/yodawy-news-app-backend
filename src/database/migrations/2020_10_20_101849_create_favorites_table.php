@@ -17,7 +17,7 @@ class CreateFavoritesTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('url');
-            $table->char('publishedAt', 25);
+            $table->dateTime('publishedAt');
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');
