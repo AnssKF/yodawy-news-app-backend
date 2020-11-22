@@ -11,6 +11,7 @@ export const FAVORITE_LIST_FILTER_INIT_STATE = () => ({
 })
 
 export default {
+    perPage: 10,
     myFavorites: [],
     paginator: PAGINATOR_INITIAL_STATE(),
     filters: FAVORITE_LIST_FILTER_INIT_STATE(),

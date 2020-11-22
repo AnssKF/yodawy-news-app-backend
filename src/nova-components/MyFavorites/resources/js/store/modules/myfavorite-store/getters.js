@@ -1,5 +1,6 @@
 
 export default {
+    getPerPage: state => (state.perPage),
     getMyFavorites: state => (state.myFavorites),
     getPaginator: state => (state.paginator),
 

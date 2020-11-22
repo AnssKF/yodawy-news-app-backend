@@ -8,8 +8,8 @@ import { FavoritesHelper } from '../../../helpers/FavoritesHelper';
 import { StatusHelper } from '../../../helpers/StatusHelper';
 
 const fetchMyFavorites = async ({ commit, getters }, page=1) => {
-    const { getDateFromFilters, getDateToFilters } = getters;
-    
+    const { getDateFromFilters, getDateToFilters, getPerPage } = getters;
+
     try {
         const filters = FavoritesHelper.encodeDateFromToFilter({dateFrom: getDateFromFilters, dateTo: getDateToFilters})
         
@@ -17,7 +17,7 @@ const fetchMyFavorites = async ({ commit, getters }, page=1) => {
             params: {
                 page,
                 filters,
-                perPage: 10,
+                perPage: getPerPage,
             }
         })
 
